@@ -1,6 +1,7 @@
 import { Component, Suspense, lazy, useMemo, useState, type ComponentType, type ErrorInfo, type ReactNode } from "react";
 import { Button } from "@grab/seller-ui/components/button";
 import { Alert, AlertDescription, AlertTitle } from "@grab/seller-ui/components/alert";
+import type { SellerRuntimeConfig } from "@grab/seller-contracts";
 
 type ErrorBoundaryProps = {
   children: ReactNode;
@@ -34,13 +35,25 @@ class RemoteErrorBoundary extends Component<ErrorBoundaryProps, { failed: boolea
   }
 }
 
-export function RemoteBoundary({ loader, label }: { loader: () => Promise<{ default: ComponentType }>; label: string }) {
+export function RemoteBoundary({
+  loader,
+  label,
+  config,
+}: {
+  loader: () => Promise<{ default: ComponentType }>;
+  label: string;
+  config: Readonly<SellerRuntimeConfig>;
+}) {
   const [attempt, setAttempt] = useState(0);
-  const Remote = useMemo(() => lazy(loader), [attempt, loader]);
+  const Remote = useMemo(() => lazy(loader),
+    [attempt, loader]);
+    
   return (
-    <RemoteErrorBoundary key={attempt} onRetry={() => setAttempt((value) => value + 1)}>
+    <RemoteErrorBoundary
+      key={attempt}
+      onRetry={() => setAttempt((value) => value + 1)}>
       <Suspense fallback={<div role="status" className="p-8 text-sm text-muted-foreground">Loading {label}…</div>}>
-        <Remote />
+        <Remote/>
       </Suspense>
     </RemoteErrorBoundary>
   );
