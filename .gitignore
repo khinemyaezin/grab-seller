@@ -7,3 +7,4 @@ test-results/
 .mf/
 coverage/
 .DS_Store
+.npmrc

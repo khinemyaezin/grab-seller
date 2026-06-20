@@ -6,25 +6,29 @@ on:
 jobs:
   composition:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with: { path: seller }
       - uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/seller-frontend-platform
-          path: seller-frontend-platform
-      - uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/seller-product-mfe
+          repository: ${{ github.repository_owner }}/grab-seller-product-mfe
           path: seller-product-mfe
       - uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/seller-inventory-mfe
+          repository: ${{ github.repository_owner }}/grab-seller-inventory-mfe
           path: seller-inventory-mfe
       - uses: actions/setup-node@v4
-        with: { node-version: 22 }
-      - run: npm ci && npm run build
-        working-directory: seller-frontend-platform
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          scope: '@grab'
+          cache: npm
+          cache-dependency-path: |
+            seller/package-lock.json
+            seller-product-mfe/package-lock.json
+            seller-inventory-mfe/package-lock.json
       - run: npm ci && npm test && npm run build
         working-directory: seller-product-mfe
       - run: npm ci && npm test && npm run build
