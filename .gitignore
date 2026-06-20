@@ -1,0 +1,9 @@
+node_modules/
+dist/
+playwright-report/
+test-results/
+@mf-types/
+*.tsbuildinfo
+.mf/
+coverage/
+.DS_Store

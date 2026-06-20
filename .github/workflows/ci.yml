@@ -1,0 +1,37 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  composition:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: seller }
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/seller-frontend-platform
+          path: seller-frontend-platform
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/seller-product-mfe
+          path: seller-product-mfe
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/seller-inventory-mfe
+          path: seller-inventory-mfe
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci && npm run build
+        working-directory: seller-frontend-platform
+      - run: npm ci && npm test && npm run build
+        working-directory: seller-product-mfe
+      - run: npm ci && npm test && npm run build
+        working-directory: seller-inventory-mfe
+      - run: npm ci && npm test && npm run build
+        working-directory: seller
+      - run: npx playwright install --with-deps chromium
+        working-directory: seller
+      - run: npm run test:e2e
+        working-directory: seller
