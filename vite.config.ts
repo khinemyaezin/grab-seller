@@ -10,19 +10,19 @@ export default defineConfig(({ mode }) => {
       federation({
         name: "seller_shell",
         remotes: {
-          seller_product: {
+          grab_seller_product: {
             type: "module",
-            name: "seller_product",
+            name: "grab_seller_product",
             entry: development
               ? "http://localhost:3001/mf-manifest.json"
-              : "/mfe/product/mf-manifest.json",
+              : "/mfe/seller-product/mf-manifest.json",
           },
-          seller_inventory: {
+          grab_seller_inventory: {
             type: "module",
-            name: "seller_inventory",
+            name: "grab_seller_inventory",
             entry: development
               ? "http://localhost:3002/mf-manifest.json"
-              : "/mfe/inventory/mf-manifest.json",
+              : "/mfe/seller-inventory/mf-manifest.json",
           },
         },
         shared: {

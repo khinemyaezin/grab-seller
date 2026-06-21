@@ -41,7 +41,7 @@ graph TD
     HostShell["Host Shell App\n(Routing, Auth, Layout)"]:::shell
     
     subgraph MFEs ["Micro-Frontends (MFEs)"]
-        ProductMFE["seller_product\n(Product Management)"]:::mfe
+        ProductMFE["grab_seller_product\n(Product Management)"]:::mfe
         InventoryMFE["seller_inventory\n(Inventory Management)"]:::mfe
     end
 
@@ -73,7 +73,7 @@ To run the Shell application locally:
 ```bash
 npm run dev
 ```
-Development expects `seller-product-mfe` on port `3001`, `seller-inventory-mfe` on port `3002`, and the backend API on port `8080`.
+Development expects `grab-seller-product` on port `3001`, `grab-seller-inventory` on port `3002`, and the backend API on port `8080`.
 
 ### Testing & Building
 - **Run Tests**: `npm run test` (powered by Vitest)

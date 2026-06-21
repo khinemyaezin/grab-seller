@@ -1,10 +1,10 @@
-declare module "seller_product/Routes" {
+declare module "grab_seller_product/Routes" {
   import type { ComponentType } from "react";
   const ProductRoutes: ComponentType;
   export default ProductRoutes;
 }
 
-declare module "seller_inventory/Routes" {
+declare module "grab_seller_inventory/Routes" {
   import type { ComponentType } from "react";
   const InventoryRoutes: ComponentType;
   export default InventoryRoutes;

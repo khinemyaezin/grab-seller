@@ -13,12 +13,12 @@ jobs:
         with: { path: seller }
       - uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/grab-seller-product-mfe
-          path: seller-product-mfe
+          repository: ${{ github.repository_owner }}/grab-seller-product
+          path: grab-seller-product
       - uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/grab-seller-inventory-mfe
-          path: seller-inventory-mfe
+          repository: ${{ github.repository_owner }}/grab-seller-inventory
+          path: grab-seller-inventory
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -27,12 +27,12 @@ jobs:
           cache: npm
           cache-dependency-path: |
             seller/package-lock.json
-            seller-product-mfe/package-lock.json
-            seller-inventory-mfe/package-lock.json
+            grab-seller-product/package-lock.json
+            grab-seller-inventory/package-lock.json
       - run: npm ci && npm test && npm run build
-        working-directory: seller-product-mfe
+        working-directory: grab-seller-product
       - run: npm ci && npm test && npm run build
-        working-directory: seller-inventory-mfe
+        working-directory: grab-seller-inventory
       - run: npm ci && npm test && npm run build
         working-directory: seller
       - run: npx playwright install --with-deps chromium

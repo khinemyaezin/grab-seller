@@ -10,8 +10,8 @@ import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 
-const loadProduct = () => import("seller_product/Routes");
-const loadInventory = () => import("seller_inventory/Routes");
+const loadProduct = () => import("grab_seller_product/Routes");
+const loadInventory = () => import("grab_seller_inventory/Routes");
 
 export default function App({ runtimeConfig }: { runtimeConfig: Readonly<SellerRuntimeConfig> }) {
   const [queryClient] = useState(() => new QueryClient());
