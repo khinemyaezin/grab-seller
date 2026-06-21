@@ -1,4 +1,5 @@
-import { NavLink } from "react-router";
+import { NavLink, type LinkProps } from "react-router";
+import type { MouseEvent } from "react";
 import { ChevronDownIcon, LayoutDashboardIcon, LogOutIcon, MoonIcon, PackageIcon, ShoppingBagIcon, SunIcon } from "lucide-react";
 import { routes } from "@grab/seller-contracts";
 import { useTheme } from "@grab/seller-ui";
@@ -60,12 +61,17 @@ export function AdminSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="gap-2 p-3">
-        {user && <span className="truncate px-2 text-xs text-muted-foreground">{user.email}</span>}
+        {user && (
+          <span className="truncate px-2 text-xs text-muted-foreground">{user.email}</span>
+        )}
         <div className="flex gap-2">
-          <Button size="icon" variant="ghost" aria-label="Toggle theme" onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>
+          <Button size="icon" variant="ghost" aria-label="Toggle theme"
+            onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}>
             {resolvedTheme === "dark" ? <SunIcon /> : <MoonIcon />}
           </Button>
-          {user && <Button size="icon" variant="ghost" aria-label="Sign out" onClick={logout}><LogOutIcon /></Button>}
+          {user && (
+            <Button size="icon" variant="ghost" aria-label="Sign out" onClick={logout}><LogOutIcon /></Button>
+          )}
         </div>
       </SidebarFooter>
     </Sidebar>
