@@ -9,16 +9,14 @@ describe("loadRuntimeConfig", () => {
   it("loads and freezes shell runtime configuration", async () => {
     vi.spyOn(globalThis, "fetch").mockResolvedValue(new Response(JSON.stringify({
       appName: "Seller Test",
-      apiBaseUrl: "/api/test",
-      features: { inventory: false },
+      apiBaseUrl: "/api/test"
     }), { status: 200 }));
 
     const config = await loadRuntimeConfig();
 
     expect(config).toMatchObject({
       appName: "Seller Test",
-      apiBaseUrl: "/api/test",
-      features: { inventory: false },
+      apiBaseUrl: "/api/test"
     });
     expect(Object.isFrozen(config)).toBe(true);
   });
@@ -29,8 +27,7 @@ describe("loadRuntimeConfig", () => {
 
     await expect(loadRuntimeConfig()).resolves.toMatchObject({
       appName: "Grab Store",
-      apiBaseUrl: "/api",
-      features: { inventory: true },
+      apiBaseUrl: "/api"
     });
   });
 

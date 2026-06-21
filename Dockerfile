@@ -1,18 +1,27 @@
-FROM node:22-alpine AS platform
-WORKDIR /workspace/seller-frontend-platform
-COPY seller-frontend-platform/package*.json seller-frontend-platform/tsconfig.base.json ./
-COPY seller-frontend-platform/packages ./packages
-RUN npm ci && npm run build
+FROM node:22-alpine AS build
 
-FROM node:22-alpine AS builder
-WORKDIR /workspace/seller
-COPY seller/package*.json ./
-COPY --from=platform /workspace/seller-frontend-platform /workspace/seller-frontend-platform
-RUN npm ci
-COPY seller/ ./
-RUN npm run build
+WORKDIR /workspace
 
-FROM nginx:1.29-alpine
-COPY seller/gateway/nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /workspace/seller/dist /usr/share/nginx/html
+COPY seller-frontend-platform ./seller-frontend-platform
+RUN cd seller-frontend-platform \
+    && npm ci \
+    && npm run build
+
+COPY seller ./seller
+RUN cd seller \
+    && npm ci \
+    && npm run build
+
+FROM nginx:1.27-alpine AS runtime
+
+COPY seller/gateway/nginx.conf /etc/nginx/templates/default.conf.template
+COPY --from=build /workspace/seller/dist /usr/share/nginx/html
+
+ENV API_UPSTREAM=host.docker.internal:8080 \
+    NGINX_ENVSUBST_FILTER=API_UPSTREAM
+
 EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget -q --spider http://127.0.0.1/ || exit 1
+

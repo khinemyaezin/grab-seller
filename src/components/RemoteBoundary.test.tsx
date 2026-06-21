@@ -6,7 +6,7 @@ import { defaultRuntimeConfig } from "@grab/seller-contracts";
 describe("RemoteBoundary", () => {
   it("keeps the shell usable when a remote cannot load", async () => {
     vi.spyOn(console, "error").mockImplementation(() => undefined);
-    render(<RemoteBoundary config={defaultRuntimeConfig} label="Products" loader={() => Promise.reject(new Error("offline"))} />);
+    render(<RemoteBoundary label="Products" loader={() => Promise.reject(new Error("offline"))} />);
     expect(await screen.findByText("Module unavailable")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Retry" })).toBeInTheDocument();
   });

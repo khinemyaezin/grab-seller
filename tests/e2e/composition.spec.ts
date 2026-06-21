@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("loads both federated domains without a document navigation", async ({ page }) => {
+test("switches repeatedly between federated domains without a document navigation", async ({ page }) => {
   await page.goto("/dashboard/products");
   await expect(page.getByRole("heading", { name: "Products" })).toBeVisible();
   const navigationStart = await page.evaluate(() => performance.timeOrigin);
@@ -8,6 +8,15 @@ test("loads both federated domains without a document navigation", async ({ page
   await page.getByRole("link", { name: "Locations" }).click();
   await expect(page).toHaveURL(/\/dashboard\/locations$/);
   await expect(page.getByRole("heading", { name: "Location" })).toBeVisible();
+
+  await page.getByRole("link", { name: "Products" }).click();
+  await expect(page).toHaveURL(/\/dashboard\/products$/);
+  await expect(page.getByRole("heading", { name: "Products" })).toBeVisible();
+
+  await page.getByRole("link", { name: "Locations" }).click();
+  await expect(page).toHaveURL(/\/dashboard\/locations$/);
+  await expect(page.getByRole("heading", { name: "Location" })).toBeVisible();
+
   const navigationAfterSwitch = await page.evaluate(() => performance.timeOrigin);
   expect(navigationAfterSwitch).toBe(navigationStart);
 });
