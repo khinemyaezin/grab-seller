@@ -8,7 +8,7 @@ RUN cd grab-seller-shared-ui \
     && npm run build
 
 COPY grab-seller ./grab-seller
-RUN cd seller \
+RUN cd grab-seller \
     && npm ci \
     && npm run build
 

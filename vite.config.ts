@@ -15,14 +15,14 @@ export default defineConfig(({ mode }) => {
             name: "grab_seller_product",
             entry: development
               ? "http://localhost:3001/mf-manifest.json"
-              : "/mfe/seller-product/mf-manifest.json",
+              : "/mfe/grab-seller-product/mf-manifest.json",
           },
           grab_seller_inventory: {
             type: "module",
             name: "grab_seller_inventory",
             entry: development
               ? "http://localhost:3002/mf-manifest.json"
-              : "/mfe/seller-inventory/mf-manifest.json",
+              : "/mfe/grab-seller-inventory/mf-manifest.json",
           },
         },
         shared: {
