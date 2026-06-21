@@ -27,15 +27,17 @@ export default function App({ runtimeConfig }: { runtimeConfig: Readonly<SellerR
                 <Route index element={<DashboardPage />} />
                 <Route path="products/*" element={
                   <RemoteBoundary
+                    key="seller-products"
                     loader={loadProduct}
                     label="Products"
-                    config={runtimeConfig}
-                  />} />
+                  />
+                } />
                 <Route path="locations/*" element={
                   <RemoteBoundary
+                    key="seller-inventory"
                     loader={loadInventory}
                     label="Inventory"
-                    config={runtimeConfig} />
+                  />
                 } />
               </Route>
               <Route path="*" element={<NotFoundPage />} />
