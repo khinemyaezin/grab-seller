@@ -1,17 +1,13 @@
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import { ThemeProvider } from "@grab/seller-ui";
-import { routes, type SellerRuntimeConfig } from "@grab/seller-contracts";
+import { ThemeProvider } from "@khinemyaezin/seller-ui";
+import { routes, type SellerRuntimeConfig } from "@khinemyaezin/seller-contracts";
 import { AuthProvider } from "./AuthContext";
 import { DashboardLayout } from "../components/DashboardLayout";
 import { RemoteBoundary } from "../components/RemoteBoundary";
-import DashboardPage from "../pages/DashboardPage";
-import LoginPage from "../pages/LoginPage";
-import NotFoundPage from "../pages/NotFoundPage";
 
-const loadProduct = () => import("grab_seller_product/Routes");
-const loadInventory = () => import("grab_seller_inventory/Routes");
+const loadAuth = () => import("grab_seller_auth/Routes");
 
 export default function App({ runtimeConfig }: { runtimeConfig: Readonly<SellerRuntimeConfig> }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -22,25 +18,17 @@ export default function App({ runtimeConfig }: { runtimeConfig: Readonly<SellerR
           <BrowserRouter>
             <Routes>
               <Route path={routes.home} element={<Navigate to={routes.dashboard} replace />} />
-              <Route path={routes.login} element={<LoginPage />} />
               <Route path={routes.dashboard} element={<DashboardLayout />}>
-                <Route index element={<DashboardPage />} />
-                <Route path="products/*" element={
-                  <RemoteBoundary
-                    key="seller-products"
-                    loader={loadProduct}
-                    label="Products"
-                  />
-                } />
-                <Route path="locations/*" element={
-                  <RemoteBoundary
-                    key="seller-inventory"
-                    loader={loadInventory}
-                    label="Inventory"
-                  />
-                } />
               </Route>
-              <Route path="*" element={<NotFoundPage />} />
+
+              <Route path="/*" element={
+                <RemoteBoundary
+                  key="seller-auth"
+                  loader={loadAuth}
+                  label="Auth"
+                  remoteProps={{ identityLink: { href: "http://localhost:3000/api/v1/identity" } }}
+                />
+              } />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

@@ -9,3 +9,9 @@ declare module "grab_seller_inventory/Routes" {
   const InventoryRoutes: ComponentType;
   export default InventoryRoutes;
 }
+
+declare module "grab_seller_auth/Routes" {
+    import type { ComponentType } from "react";
+    const AuthRoutes: ComponentType;
+    export default AuthRoutes;
+}

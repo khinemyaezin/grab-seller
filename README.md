@@ -46,8 +46,8 @@ graph TD
     end
 
     subgraph SharedPackages ["Shared Platform Packages"]
-        UI["@grab/seller-ui\n(UI Components)"]:::shared
-        API["@grab/seller-api\n(HTTP Client)"]:::shared
+        UI["@khinemyaezin/seller-ui\n(UI Components)"]:::shared
+        API["@khinemyaezin/seller-api\n(HTTP Client)"]:::shared
     end
     
     BackendServer[("Backend API Services")]:::backend

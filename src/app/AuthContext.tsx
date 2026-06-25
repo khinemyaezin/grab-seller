@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
-import { api } from "@grab/seller-api";
-import type { LoginCredentials, User } from "@grab/seller-contracts";
+import { api } from "@khinemyaezin/seller-api";
+import type { LoginCredentials, User } from "@khinemyaezin/seller-contracts";
 
 type AuthContextValue = {
   user: User | null;

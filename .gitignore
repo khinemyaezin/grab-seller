@@ -12,3 +12,4 @@ vitest.config.d.ts
 coverage/
 .DS_Store
 .npmrc
+.vscode
