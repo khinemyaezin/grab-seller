@@ -20,7 +20,6 @@ export default function App({ runtimeConfig }: { runtimeConfig: Readonly<SellerR
               <Route path={routes.home} element={<Navigate to={routes.dashboard} replace />} />
               <Route path={routes.dashboard} element={<DashboardLayout />}>
               </Route>
-
               <Route path="/*" element={
                 <RemoteBoundary
                   key="seller-auth"
