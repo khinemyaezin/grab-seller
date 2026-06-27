@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
-import { SidebarProvider, SidebarTrigger } from "@grab/seller-ui/components/sidebar";
-import { TooltipProvider } from "@grab/seller-ui/components/tooltip";
-import { Toaster } from "@grab/seller-ui";
+import { SidebarProvider, SidebarTrigger } from "@khinemyaezin/seller-ui/components/sidebar";
+import { TooltipProvider } from "@khinemyaezin/seller-ui/components/tooltip";
+import { Toaster } from "@khinemyaezin/seller-ui";
 import { AdminSidebar } from "./AdminSidebar";
 
 export function DashboardLayout() {

@@ -2,7 +2,6 @@ node_modules/
 dist/
 playwright-report/
 test-results/
-@mf-types/
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
@@ -12,3 +11,4 @@ vitest.config.d.ts
 coverage/
 .DS_Store
 .npmrc
+.vscode

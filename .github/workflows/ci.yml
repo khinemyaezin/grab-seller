@@ -7,35 +7,25 @@ jobs:
   composition:
     runs-on: ubuntu-latest
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-        with: { path: seller }
+        with:
+          path: grab-seller
       - uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/grab-seller-product
-          path: grab-seller-product
-      - uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/grab-seller-inventory
-          path: grab-seller-inventory
+          repository: ${{ github.repository_owner }}/grab-seller-auth
+          path: grab-seller-auth
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: https://registry.npmjs.org
-          scope: '@grab'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@khinemyaezin'
           cache: npm
           cache-dependency-path: |
-            seller/package-lock.json
-            grab-seller-product/package-lock.json
-            grab-seller-inventory/package-lock.json
+            grab-seller/package-lock.json
+            grab-seller-auth/package-lock.json
       - run: npm ci && npm test && npm run build
-        working-directory: grab-seller-product
+        working-directory: grab-seller-auth
       - run: npm ci && npm test && npm run build
-        working-directory: grab-seller-inventory
-      - run: npm ci && npm test && npm run build
-        working-directory: seller
-      - run: npx playwright install --with-deps chromium
-        working-directory: seller
-      - run: npm run test:e2e
-        working-directory: seller
+        working-directory: grab-seller

@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { configureApi } from "@grab/seller-api";
+import { configureApi } from "@khinemyaezin/seller-api";
 import App from "./app/App";
 import { loadRuntimeConfig } from "./config/runtime-config";
 import "./styles.css";
@@ -10,7 +10,6 @@ async function bootstrap() {
 
   configureApi({
     baseUrl: runtimeConfig.apiBaseUrl,
-    getAccessToken: () => "",
   });
 
   document.title = runtimeConfig.appName;

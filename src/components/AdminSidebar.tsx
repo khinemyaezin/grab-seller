@@ -1,15 +1,15 @@
 import { NavLink, type LinkProps } from "react-router";
 import type { MouseEvent } from "react";
 import { ChevronDownIcon, LayoutDashboardIcon, LogOutIcon, MoonIcon, PackageIcon, ShoppingBagIcon, SunIcon } from "lucide-react";
-import { routes } from "@grab/seller-contracts";
-import { useTheme } from "@grab/seller-ui";
-import { Button } from "@grab/seller-ui/components/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@grab/seller-ui/components/collapsible";
+import { routes } from "@khinemyaezin/seller-contracts";
+import { useTheme } from "@khinemyaezin/seller-ui";
+import { Button } from "@khinemyaezin/seller-ui/components/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@khinemyaezin/seller-ui/components/collapsible";
 import {
   Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
   SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub,
   SidebarMenuSubButton, SidebarMenuSubItem,
-} from "@grab/seller-ui/components/sidebar";
+} from "@khinemyaezin/seller-ui/components/sidebar";
 import { useAuth } from "../app/AuthContext";
 
 const groups = [

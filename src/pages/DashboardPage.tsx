@@ -1,4 +1,4 @@
-import { Header } from "@grab/seller-ui";
+import { Header } from "@khinemyaezin/seller-ui";
 
 export default function DashboardPage() {
   return (
