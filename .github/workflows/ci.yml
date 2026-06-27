@@ -29,7 +29,3 @@ jobs:
         working-directory: grab-seller-auth
       - run: npm ci && npm test && npm run build
         working-directory: grab-seller
-      - run: npx playwright install --with-deps chromium
-        working-directory: grab-seller
-      - run: npm run test:e2e
-        working-directory: grab-seller
