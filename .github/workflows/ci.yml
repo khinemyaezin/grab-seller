@@ -10,7 +10,8 @@ jobs:
       NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-        with: { path: seller }
+        with:
+          path: grab-seller
       - uses: actions/checkout@v4
         with:
           repository: ${{ github.repository_owner }}/grab-seller-auth
@@ -18,13 +19,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: https://registry.npmjs.org
-          scope: '@grab'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@khinemyaezin'
           cache: npm
           cache-dependency-path: |
-            seller/package-lock.json
-            grab-seller-product/package-lock.json
-            grab-seller-inventory/package-lock.json
+            grab-seller/package-lock.json
+            grab-seller-auth/package-lock.json
       - run: npm ci && npm test && npm run build
         working-directory: grab-seller-auth
       - run: npm ci && npm test && npm run build
