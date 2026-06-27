@@ -2,7 +2,6 @@ node_modules/
 dist/
 playwright-report/
 test-results/
-@mf-types/
 *.tsbuildinfo
 vite.config.js
 vite.config.d.ts
