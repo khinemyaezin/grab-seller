@@ -17,20 +17,6 @@ export default defineConfig(({ mode }) => {
           },
         },
         remotes: {
-          // grab_seller_product: {
-          //   type: "module",
-          //   name: "grab_seller_product",
-          //   entry: development
-          //     ? "http://localhost:3001/mf-manifest.json"
-          //     : "/mfe/grab-seller-product/mf-manifest.json",
-          // },
-          // grab_seller_inventory: {
-          //   type: "module",
-          //   name: "grab_seller_inventory",
-          //   entry: development
-          //     ? "http://localhost:3002/mf-manifest.json"
-          //     : "/mfe/grab-seller-inventory/mf-manifest.json",
-          // },
           grab_seller_auth: {
             type: "module",
             name: "grab_seller_auth",
@@ -49,10 +35,7 @@ export default defineConfig(({ mode }) => {
       }),
     ],
     resolve: {
-      alias: {
-        "@khinemyaezin/seller-api": fileURLToPath(new URL("../grab-seller-shared-ui/packages/seller-api/src/index.ts", import.meta.url)),
-        "@khinemyaezin/seller-contracts": fileURLToPath(new URL("../grab-seller-shared-ui/packages/seller-contracts/src/index.ts", import.meta.url)),
-      },
+      alias: {},
     },
     server: {
       port: 3000,
