@@ -10,7 +10,6 @@ async function bootstrap() {
 
   configureApi({
     baseUrl: runtimeConfig.apiBaseUrl,
-    getAccessToken: () => "",
   });
 
   document.title = runtimeConfig.appName;

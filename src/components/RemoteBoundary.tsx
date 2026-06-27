@@ -1,7 +1,6 @@
 import { Component, Suspense, lazy, useMemo, useState, type ComponentType, type ErrorInfo, type ReactNode } from "react";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
 import { Alert, AlertDescription, AlertTitle } from "@khinemyaezin/seller-ui/components/alert";
-import { HateoasLink } from "@khinemyaezin/seller-api";
 
 type ErrorBoundaryProps = {
   children: ReactNode;
@@ -35,7 +34,7 @@ class RemoteErrorBoundary extends Component<ErrorBoundaryProps, { failed: boolea
   }
 }
 
-export function RemoteBoundary<P extends object = { link: HateoasLink}>({
+export function RemoteBoundary<P extends object = Record<string, never>>({
   loader,
   label,
   remoteProps,

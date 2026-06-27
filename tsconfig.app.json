@@ -15,6 +15,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@khinemyaezin/seller-api": ["../grab-seller-shared-ui/packages/seller-api/src/index.ts"],
+      "@khinemyaezin/seller-contracts": ["../grab-seller-shared-ui/packages/seller-contracts/src/index.ts"],
+      "grab_seller_auth/*": ["@mf-types/grab_seller_auth/*"]
+    },
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"]
   },
   "include": ["src", "@mf-types"]

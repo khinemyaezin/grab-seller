@@ -13,12 +13,8 @@ jobs:
         with: { path: seller }
       - uses: actions/checkout@v4
         with:
-          repository: ${{ github.repository_owner }}/grab-seller-product
-          path: grab-seller-product
-      - uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/grab-seller-inventory
-          path: grab-seller-inventory
+          repository: ${{ github.repository_owner }}/grab-seller-auth
+          path: grab-seller-auth
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -30,9 +26,7 @@ jobs:
             grab-seller-product/package-lock.json
             grab-seller-inventory/package-lock.json
       - run: npm ci && npm test && npm run build
-        working-directory: grab-seller-product
-      - run: npm ci && npm test && npm run build
-        working-directory: grab-seller-inventory
+        working-directory: grab-seller-auth
       - run: npm ci && npm test && npm run build
         working-directory: seller
       - run: npx playwright install --with-deps chromium
