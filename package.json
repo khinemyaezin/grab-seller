@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview --port 3000",
     "typecheck": "tsc -b",
-    "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test": "vitest run"
   },
   "dependencies": {
    "@khinemyaezin/seller-api": "1.0.0",
@@ -23,7 +22,6 @@
   },
   "devDependencies": {
     "@module-federation/vite": "1.16.9",
-    "@playwright/test": "1.61.0",
     "@tailwindcss/postcss": "4.1.18",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "16.3.2",
