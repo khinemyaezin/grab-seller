@@ -6,6 +6,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "grab_seller_auth/AuthService": fileURLToPath(new URL("./src/test/mocks/grab-seller-auth-service.ts", import.meta.url)),
+      "grab_seller_account/Service": fileURLToPath(new URL("./src/test/mocks/grab-seller-account-service.ts", import.meta.url)),
     },
   },
   plugins: [react()],

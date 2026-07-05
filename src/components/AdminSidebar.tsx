@@ -13,8 +13,8 @@ import {
 import { useAuth } from "../app/AuthContext";
 
 const groups = [
-  { label: "Inventory", icon: PackageIcon, children: [{ href: routes.locations, label: "Locations" }] },
-  { label: "Catalog", icon: ShoppingBagIcon, children: [{ href: routes.products, label: "Products" }] },
+  { label: "Inventory", icon: PackageIcon, children: [{ href: "", label: "Locations" }] },
+  { label: "Catalog", icon: ShoppingBagIcon, children: [{ href: "", label: "Products" }] },
 ];
 
 export function AdminSidebar() {
@@ -30,7 +30,7 @@ export function AdminSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild tooltip="Overview">
-                  <NavLink to={routes.dashboard}><LayoutDashboardIcon className="size-4" /><span>Overview</span></NavLink>
+                  <NavLink to={"dashboard"}><LayoutDashboardIcon className="size-4" /><span>Overview</span></NavLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               {groups.map((group) => (

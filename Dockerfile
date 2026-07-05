@@ -2,14 +2,13 @@ FROM node:22-alpine AS build
 
 WORKDIR /workspace
 
-COPY grab-seller-shared-ui ./grab-seller-shared-ui
-RUN cd grab-seller-shared-ui \
-    && npm ci \
-    && npm run build
+COPY grab-seller/package*.json ./grab-seller/
+RUN --mount=type=secret,id=npmrc,target=/root/.npmrc \
+    cd grab-seller \
+    && npm ci
 
 COPY grab-seller ./grab-seller
 RUN cd grab-seller \
-    && npm ci \
     && npm run build
 
 FROM nginx:1.27-alpine AS runtime
