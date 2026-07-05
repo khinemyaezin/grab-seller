@@ -17,6 +17,10 @@ vi.mock("grab_seller_auth/AuthService", () => ({
   createAuthService: authMocks.createAuthService,
 }));
 
+vi.mock("grab_seller_account/Service", () => ({
+  createSellerAccountService: vi.fn(),
+}));
+
 const runtimeConfig: SellerRuntimeConfig = {
   appName: "Grab Store",
   apiBaseUrl: "/api",
@@ -34,7 +38,7 @@ function renderAuthProvider(initialPath: string) {
       <EntryLinkContext.Provider value={{ identity: { href: "/identity" } }}>
         <AuthProvider runtimeConfig={runtimeConfig}>
           <Routes>
-            <Route path={`${routes.dashboard}/*`} element={<div>Dashboard page</div>} />
+            <Route path={`${"dashboard"}/*`} element={<div>Dashboard page</div>} />
             <Route path={routes.login} element={<div>Login page</div>} />
           </Routes>
         </AuthProvider>
@@ -63,7 +67,7 @@ describe("AuthProvider", () => {
   it("renders protected dashboard routes after restoring an authenticated session", async () => {
     authMocks.getProfile.mockResolvedValue(authenticatedUser);
 
-    renderAuthProvider(routes.dashboard);
+    renderAuthProvider("/dashboard");
 
     expect(await screen.findByText("Dashboard page")).toBeInTheDocument();
     expect(screen.queryByText("Login page")).not.toBeInTheDocument();
@@ -72,7 +76,7 @@ describe("AuthProvider", () => {
   it("redirects a direct protected URL to login when no session is available", async () => {
     authMocks.getProfile.mockRejectedValue(new Error("No active session"));
 
-    renderAuthProvider(routes.dashboard);
+    renderAuthProvider("/dashboard");
 
     expect(await screen.findByText("Login page")).toBeInTheDocument();
     expect(screen.queryByText("Dashboard page")).not.toBeInTheDocument();

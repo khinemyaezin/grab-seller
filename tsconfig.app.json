@@ -19,7 +19,8 @@
     "paths": {
       "@khinemyaezin/seller-api": ["../grab-seller-shared-ui/packages/seller-api/src/index.ts"],
       "@khinemyaezin/seller-contracts": ["../grab-seller-shared-ui/packages/seller-contracts/src/index.ts"],
-      "grab_seller_auth/*": ["@mf-types/grab_seller_auth/*"]
+      "grab_seller_auth/*": ["@mf-types/grab_seller_auth/*"],
+      "grab_seller_account/*": ["@mf-types/grab_seller_account/*"]
     },
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"]
   },
