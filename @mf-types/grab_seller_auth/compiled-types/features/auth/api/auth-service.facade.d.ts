@@ -1,7 +1,7 @@
 import type { HateoasLink } from "@khinemyaezin/seller-api";
-import { User } from "@khinemyaezin/seller-contracts";
+import { UserProfile } from "../types";
 export interface AuthServiceFacade {
-    getProfile(): Promise<User>;
+    getProfile(): Promise<UserProfile>;
     logout(): Promise<void>;
     refreshToken(): Promise<void>;
 }

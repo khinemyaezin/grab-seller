@@ -1,12 +1,12 @@
-import { resolveLink } from "@khinemyaezin/seller-api";
-import { ModuleRoutes, type ModuleRouteKey, type SellerRuntimeConfig } from "@khinemyaezin/seller-contracts";
+import { ModuleDiscovery, ModuleName, resolveLink } from "@khinemyaezin/seller-api";
+import { type SellerRuntimeConfig } from "@khinemyaezin/seller-contracts";
 import { type ReactNode, useMemo } from "react";
 import { useEntryGet } from "../hooks";
 import { EntryLinkContext, type ModuleLinksValue } from "./EntryLinkContext";
 
 export type { ModuleLinksValue } from "./EntryLinkContext";
 
-const moduleRouteKeys = Object.keys(ModuleRoutes) as ModuleRouteKey[];
+const moduleRouteKeys = Object.keys(ModuleDiscovery) as ModuleName[];
 
 export function EntryLinkProvider({
   runtimeConfig,
@@ -21,7 +21,7 @@ export function EntryLinkProvider({
     if (!data?._links) return null;
 
     return moduleRouteKeys.reduce<ModuleLinksValue>((acc, key) => {
-      const link = resolveLink(data._links, ModuleRoutes[key]);
+      const link = resolveLink(data._links, ModuleDiscovery[key]);
       if (link) {
         acc[key] = link;
       }

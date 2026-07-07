@@ -1,8 +1,7 @@
 import { createContext, useContext } from "react";
-import type { HateoasLink } from "@khinemyaezin/seller-api";
-import type { ModuleRouteKey } from "@khinemyaezin/seller-contracts";
+import type { HateoasLink, ModuleName } from "@khinemyaezin/seller-api";
 
-export type ModuleLinksValue = Partial<Record<ModuleRouteKey, HateoasLink>>;
+export type ModuleLinksValue = Partial<Record<ModuleName, HateoasLink>>;
 
 export const EntryLinkContext = createContext<ModuleLinksValue | null | undefined>(undefined);
 
@@ -14,6 +13,6 @@ export function useEntryLinks(): ModuleLinksValue | null {
   return value;
 }
 
-export function useEntryLink(module: ModuleRouteKey): HateoasLink | null {
+export function useEntryLink(module: ModuleName): HateoasLink | null {
   return useEntryLinks()?.[module] ?? null;
 }

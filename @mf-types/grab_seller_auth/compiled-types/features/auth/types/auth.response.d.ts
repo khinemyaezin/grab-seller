@@ -18,7 +18,17 @@ export interface ProfileResponse {
     roles: string[];
     status: string;
     createdAt: string;
+    accessContexts: AccessContextResponse[];
+    currentAccessContext: AccessContextResponse;
     _links: Record<string, {
         href: string;
     }>;
+}
+export interface AccessContextResponse {
+    assignmentId: string;
+    platformCode: string;
+    roleCode: string;
+    scopeKey: string;
+    scopeId: string;
+    status: string;
 }

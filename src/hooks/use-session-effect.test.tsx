@@ -25,14 +25,17 @@ describe("useSessionEffects", () => {
   };
 
   it("subscribes to auth:login-success:v1 and reloads session", async () => {
-    const mockLoadSession = vi.fn().mockResolvedValue({ status: "authenticated" });
+    const mockLoadSession = vi.fn().mockResolvedValue({ 
+      status: "authenticated", 
+      user: { accessContext: { scopeId: "some-scope" } } 
+    });
     
     const subscribeSpy = vi.spyOn(eventBus, "subscribe");
     
     renderHook(
       () => useSessionEffects({ snapshot: defaultSnapshot, loadSession: mockLoadSession }),
       {
-        wrapper: ({ children }: any) => <MemoryRouter>{children}</MemoryRouter>,
+        wrapper: ({ children }: any) => <MemoryRouter initialEntries={[`/${routes.login}`]}>{children}</MemoryRouter>,
       }
     );
 
@@ -59,7 +62,7 @@ describe("useSessionEffects", () => {
     renderHook(
       () => useSessionEffects({ snapshot: defaultSnapshot, loadSession: mockLoadSession }),
       {
-        wrapper: ({ children }: any) => <MemoryRouter>{children}</MemoryRouter>,
+        wrapper: ({ children }: any) => <MemoryRouter initialEntries={[`/${routes.register}`]}>{children}</MemoryRouter>,
       }
     );
 

@@ -1,7 +1,5 @@
-import { NavLink, type LinkProps } from "react-router";
-import type { MouseEvent } from "react";
+import { NavLink } from "react-router";
 import { ChevronDownIcon, LayoutDashboardIcon, LogOutIcon, MoonIcon, PackageIcon, ShoppingBagIcon, SunIcon } from "lucide-react";
-import { routes } from "@khinemyaezin/seller-contracts";
 import { useTheme } from "@khinemyaezin/seller-ui";
 import { Button } from "@khinemyaezin/seller-ui/components/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@khinemyaezin/seller-ui/components/collapsible";
@@ -12,10 +10,13 @@ import {
 } from "@khinemyaezin/seller-ui/components/sidebar";
 import { useAuth } from "../app/AuthContext";
 
-const groups = [
-  { label: "Inventory", icon: PackageIcon, children: [{ href: "", label: "Locations" }] },
-  { label: "Catalog", icon: ShoppingBagIcon, children: [{ href: "", label: "Products" }] },
-];
+type Menu = {
+  label: string,
+  icon: React.ElementType,
+  children: { href: string, label: string }[]
+}
+
+const groups: Menu[] = [];
 
 export function AdminSidebar() {
   const { resolvedTheme, setTheme } = useTheme();

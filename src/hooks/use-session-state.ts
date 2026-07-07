@@ -1,7 +1,8 @@
 import { useState, useRef, useCallback } from "react";
 import { SessionSnapshot, User } from "@khinemyaezin/seller-contracts";
+import { UserProfile } from "grab_seller_auth/compiled-types/features/auth/types";
 
-export const profileToSnapshot = (profile: User): SessionSnapshot => {
+export const profileToSnapshot = (profile: UserProfile): SessionSnapshot => {
   const { createdAt, ...user } = profile;
   return {
     status: "authenticated",
