@@ -30,6 +30,7 @@ const authenticatedUser: User = {
   id: "seller-1",
   email: "seller@example.com",
   name: "Seller Admin",
+  accessContexts: [],
 };
 
 function renderAuthProvider(initialPath: string) {

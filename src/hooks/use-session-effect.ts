@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router";
 import { eventBus } from "@khinemyaezin/seller-api";
 import { SessionSnapshot, routes } from "@khinemyaezin/seller-contracts";
 
+const GLOBAL_SCOPE_KEY = "*";
+
 const isAuthPath = (pathname: string) => {
   const normalized = pathname.startsWith("/") ? pathname.slice(1) : pathname;
   return (
@@ -36,29 +38,67 @@ export function useSessionEffects({
         replace: true,
         state: { from: currentPath(location) },
       });
+      return;
     }
 
-    if (snapshot.status === "authenticated" && isAuthPath(location.pathname)) {
-      navigate("", { replace: true });
+    if (snapshot.status === "authenticated") {
+      const nonGlobalContexts = snapshot.user.accessContexts.filter(
+        (ctx) => ctx.scopeId !== GLOBAL_SCOPE_KEY
+      );
+
+      if (nonGlobalContexts.length === 0) {
+        if (!location.pathname.startsWith("/onboarding")) {
+          navigate("/onboarding", { replace: true });
+        }
+      } else if (
+        !snapshot.user.currentAccessContext ||
+        snapshot.user.currentAccessContext.scopeId === GLOBAL_SCOPE_KEY
+      ) {
+        if (location.pathname !== `/${routes.contextSelection}`) {
+          navigate(`/${routes.contextSelection}`, { replace: true });
+        }
+      } else if (isAuthPath(location.pathname)) {
+        navigate("", { replace: true });
+      }
     }
-  }, [location, navigate, snapshot.status]);
+  }, [location, navigate, snapshot]);
 
   useEffect(() => {
-    const unsubLogin = eventBus.subscribe("auth:login-success:v1", () => {
-      void loadSession().then((next) => {
-        if (next.status === "authenticated") {
+    const handleAuthRedirect = (next: SessionSnapshot) => {
+      if (next.status === "authenticated") {
+        const nonGlobalContexts = next.user.accessContexts.filter(
+          (ctx) => ctx.scopeId !== GLOBAL_SCOPE_KEY
+        );
+
+        if (nonGlobalContexts.length === 0) {
+          navigate("/onboarding", { replace: true });
+        } else if (
+          !next.user.currentAccessContext ||
+          next.user.currentAccessContext.scopeId === GLOBAL_SCOPE_KEY
+        ) {
+          navigate(`/${routes.contextSelection}`, { replace: true });
+        } else {
           navigate("", { replace: true });
         }
-      });
+      }
+    };
+
+    const unsubLogin = eventBus.subscribe("auth:login-success:v1", () => {
+      void loadSession().then(handleAuthRedirect);
     });
 
     const unsubRegister = eventBus.subscribe("auth:registration-success:v1", () => {
-      navigate(`/${routes.login}`, { replace: true })
+      navigate(`/${routes.login}`, { replace: true });
+    });
+
+    const unsubAccessContextOnSelect = eventBus.subscribe("auth:context-selected:v1", () => {
+      void loadSession().then(handleAuthRedirect);
     });
 
     return () => {
       unsubLogin();
       unsubRegister();
+      unsubAccessContextOnSelect();
     };
   }, [loadSession, navigate]);
 }

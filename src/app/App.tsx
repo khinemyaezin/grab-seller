@@ -23,7 +23,8 @@ function ShellRoutes() {
   useMerchantOnboardingEffect();
 
   if (!identityLink) {
-    return <div role="status" className="p-8 text-sm text-muted-foreground">Loading seller modules…</div>;
+    return (
+      <div role="status" className="p-8 text-sm text-muted-foreground">Loading seller modules…</div>);
   }
 
   return (

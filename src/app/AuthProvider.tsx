@@ -4,7 +4,7 @@ import { eventBus, configureApi } from "@khinemyaezin/seller-api";
 import { SellerRuntimeConfig, SessionApi, SellerPlatform } from "@khinemyaezin/seller-contracts";
 
 import { AuthContextValue, AuthContext } from "./AuthContext";
-import { useAuthService, useSellerAccountService, useSessionEffects, useSessionOperations, useSessionState } from "../hooks";
+import { useAuthService, useSessionEffects, useSessionOperations, useSessionState } from "../hooks";
 
 export function AuthProvider({
   children,
