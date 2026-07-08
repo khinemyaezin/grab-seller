@@ -27,7 +27,10 @@ describe("useSessionEffects", () => {
   it("subscribes to auth:login-success:v1 and reloads session", async () => {
     const mockLoadSession = vi.fn().mockResolvedValue({ 
       status: "authenticated", 
-      user: { accessContext: { scopeId: "some-scope" } } 
+      user: { 
+        accessContexts: [{ scopeId: "some-scope" }],
+        currentAccessContext: { scopeId: "some-scope" }
+      } 
     });
     
     const subscribeSpy = vi.spyOn(eventBus, "subscribe");
