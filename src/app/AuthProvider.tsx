@@ -1,5 +1,5 @@
 import { ReactNode, useMemo, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { eventBus, configureApi } from "@khinemyaezin/seller-api";
 import { SellerRuntimeConfig, SessionApi, SellerPlatform } from "@khinemyaezin/seller-contracts";
 

@@ -11,9 +11,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@khinemyaezin/seller-api": "^1.0.1-canary-c8afa68",
-    "@khinemyaezin/seller-contracts": "^1.0.1-canary-c8afa68",
-    "@khinemyaezin/seller-ui": "^1.0.1-canary-9998cda",
+    "@khinemyaezin/seller-api": "^1.0.1-canary-d7b53ac",
+    "@khinemyaezin/seller-contracts": "^1.0.1-canary-d7b53ac",
+    "@khinemyaezin/seller-ui": "^1.0.1-canary-d7b53ac",
     "@tanstack/react-query": "5.99.2",
     "lucide-react": "1.8.0",
     "react": "19.2.4",

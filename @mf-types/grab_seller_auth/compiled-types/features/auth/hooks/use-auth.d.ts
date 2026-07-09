@@ -1,6 +1,6 @@
 import { HateoasLink } from "@khinemyaezin/seller-api";
 import { LoginRequest, RegisterUserRequest } from "../types/auth.request";
-import { LoginResponse, ProfileResponse, RegisterUserReponse } from "../types/auth.response";
+import { LoginResponse, RegisterUserReponse } from "../types/auth.response";
 export declare const useLoginMutation: () => import("@tanstack/react-query").UseMutationResult<LoginResponse, Error, {
     link: HateoasLink;
     request: LoginRequest;
@@ -9,4 +9,4 @@ export declare const useRegisterMutation: () => import("@tanstack/react-query").
     link: HateoasLink;
     request: RegisterUserRequest;
 }, unknown>;
-export declare const useProfileGet: (link?: HateoasLink) => import("@tanstack/react-query").UseQueryResult<ProfileResponse, Error>;
+export declare const useProfileGet: (link?: HateoasLink) => import("@tanstack/react-query").UseQueryResult<import("../types").ProfileResponse, Error>;
