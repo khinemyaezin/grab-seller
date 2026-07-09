@@ -13,7 +13,7 @@
   "dependencies": {
     "@khinemyaezin/seller-api": "^1.0.1-canary-d7b53ac",
     "@khinemyaezin/seller-contracts": "^1.0.1-canary-d7b53ac",
-    "@khinemyaezin/seller-ui": "^1.0.1-canary-d7b53ac",
+    "@khinemyaezin/seller-ui": "^1.0.1-canary-a966ae1",
     "@tanstack/react-query": "5.99.2",
     "lucide-react": "1.8.0",
     "react": "19.2.4",
