@@ -9,7 +9,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@khinemyaezin/seller-ui/components/sidebar";
-import { NavMain, ThemeToggleSidebarItem, UserAvatarDetails } from "@khinemyaezin/seller-ui";
+import { NavMain, ThemeToggle, UserAvatarDetails } from "@khinemyaezin/seller-ui";
 import { useAuth } from "../app/AuthContext";
 import { useEntryLink } from "../app/EntryLinkContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@khinemyaezin/seller-ui/components/avatar";
@@ -24,7 +24,7 @@ type Menu = {
 
 const groups: Menu[] = [];
 
-export function AdminSidebar() {
+export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { platform, user, logout } = useAuth();
   const identityLink = useEntryLink("identity");
 
@@ -41,7 +41,8 @@ export function AdminSidebar() {
   ];
 
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon"
+      {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -59,11 +60,6 @@ export function AdminSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <NavMain label="Menu" items={navItems} />
-        <div className="mt-auto px-4 pb-4">
-          <SidebarMenu>
-            <ThemeToggleSidebarItem />
-          </SidebarMenu>
-        </div>
       </SidebarContent>
       <SidebarFooter className="p-3">
         {user && identityLink && (

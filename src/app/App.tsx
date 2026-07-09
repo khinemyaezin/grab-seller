@@ -12,6 +12,8 @@ import { DashboardLayout } from "../components/DashboardLayout";
 import DashboardPage from "../pages/DashboardPage";
 import { useMerchantOnboardingEffect } from "../hooks";
 
+import { SimpleLayout } from "../components/SimpleLayout";
+
 const loadAuth = () => import("grab_seller_auth/Routes");
 const loadSellerAccount = () => import("grab_seller_account/Routes");
 
@@ -25,40 +27,37 @@ function ShellRoutes() {
   return (
     <Routes>
       <Route path={routes.home} element={<Navigate to={`/dashboard`} replace />} />
-      {isAuthenticated && (
-        <>
-          <Route path={`/dashboard`} element={<DashboardLayout />}>
-            <Route index element={<DashboardPage />} />
-          </Route>
-          {merchantLink && (
-            <Route path="/onboarding/*" element={
-              <RemoteBoundary
-                loader={loadSellerAccount}
-                label="Onboarding"
-                remoteProps={{
-                  platform,
-                  link: merchantLink
-                }}
-              />
-            }
+      <Route path={`/dashboard`} element={<DashboardLayout />}>
+        <Route index element={<DashboardPage />} />
+      </Route>
+      <Route element={<SimpleLayout />}>
+        {merchantLink && (
+          <Route path="/onboarding/*" element={
+            <RemoteBoundary
+              loader={loadSellerAccount}
+              label="Onboarding"
+              remoteProps={{
+                platform,
+                link: merchantLink
+              }}
             />
-          )}
-        </>
-      )}
-      {identityLink && (
-        <Route path="/*" element={
-          <RemoteBoundary
-            key="seller-auth"
-            loader={loadAuth}
-            label="Auth"
-            remoteProps={{
-              platform,
-              link: identityLink
-            }}
+          }
           />
-        } />
-      )}
-
+        )}
+        {identityLink && (
+          <Route path="/*" element={
+            <RemoteBoundary
+              key="seller-auth"
+              loader={loadAuth}
+              label="Auth"
+              remoteProps={{
+                platform,
+                link: identityLink
+              }}
+            />
+          } />
+        )}
+      </Route>
     </Routes>
   );
 }
