@@ -22,21 +22,16 @@ function ShellRoutes() {
 
   useMerchantOnboardingEffect();
 
-  if (!identityLink) {
-    return (
-      <div role="status" className="p-8 text-sm text-muted-foreground">Loading seller modules…</div>);
-  }
-
   return (
     <Routes>
-      <Route path={routes.home} element={<Navigate to={"/"} replace />} />
+      <Route path={routes.home} element={<Navigate to={`/dashboard`} replace />} />
       {isAuthenticated && (
         <>
-          <Route path="/" element={<DashboardLayout />}>
+          <Route path={`/dashboard`} element={<DashboardLayout />}>
             <Route index element={<DashboardPage />} />
           </Route>
-          <Route path="/onboarding/*" element={
-            merchantLink && (
+          {merchantLink && (
+            <Route path="/onboarding/*" element={
               <RemoteBoundary
                 loader={loadSellerAccount}
                 label="Onboarding"
@@ -45,22 +40,24 @@ function ShellRoutes() {
                   link: merchantLink
                 }}
               />
-            )
-          }
-          />
+            }
+            />
+          )}
         </>
       )}
-      <Route path="/*" element={
-        <RemoteBoundary
-          key="seller-auth"
-          loader={loadAuth}
-          label="Auth"
-          remoteProps={{
-            platform,
-            link: identityLink
-          }}
-        />
-      } />
+      {identityLink && (
+        <Route path="/*" element={
+          <RemoteBoundary
+            key="seller-auth"
+            loader={loadAuth}
+            label="Auth"
+            remoteProps={{
+              platform,
+              link: identityLink
+            }}
+          />
+        } />
+      )}
 
     </Routes>
   );
