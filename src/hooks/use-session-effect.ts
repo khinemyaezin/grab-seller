@@ -21,9 +21,11 @@ const currentPath = (location: ReturnType<typeof useLocation>) =>
 export function useSessionEffects({
   snapshot,
   loadSession,
+  onSessionCleared,
 }: {
   snapshot: SessionSnapshot;
   loadSession: () => Promise<SessionSnapshot>;
+  onSessionCleared?: () => void
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -92,6 +94,7 @@ export function useSessionEffects({
     });
 
     const unsubAccessContextOnSelect = eventBus.subscribe("auth:context-selected:v1", () => {
+      onSessionCleared?.();
       void loadSession().then(handleAuthRedirect);
     });
 

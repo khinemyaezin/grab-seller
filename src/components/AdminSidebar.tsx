@@ -1,4 +1,4 @@
-import { LayoutDashboardIcon, ChevronsUpDown, UserIcon } from "lucide-react";
+import { LayoutDashboardIcon, ChevronsUpDown, UserIcon, Carrot, Store } from "lucide-react";
 import React, { Suspense, lazy } from "react";
 import {
   Sidebar,
@@ -9,51 +9,39 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@khinemyaezin/seller-ui/components/sidebar";
-import { NavMain, ThemeToggle, UserAvatarDetails } from "@khinemyaezin/seller-ui";
+import { NavItem, NavMain, ThemeToggle, UserAvatarDetails } from "@khinemyaezin/seller-ui";
 import { useAuth } from "../app/AuthContext";
 import { useEntryLink } from "../app/EntryLinkContext";
-import { Avatar, AvatarFallback, AvatarImage } from "@khinemyaezin/seller-ui/components/avatar";
+import { routes } from "@khinemyaezin/seller-contracts";
 
 const RemoteUserMenuWidget = lazy(() => import("grab_seller_auth/UserMenuWidget"));
-
-type Menu = {
-  label: string;
-  icon: React.ElementType;
-  children: { href: string; label: string }[];
-};
-
-const groups: Menu[] = [];
 
 export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { platform, user, logout } = useAuth();
   const identityLink = useEntryLink("identity");
 
-  const navItems = [
-    ...groups.map((g) => ({
-      title: g.label,
-      url: "#",
-      icon: g.icon as any,
-      items: g.children.map((c) => ({
-        title: c.label,
-        url: c.href,
-      })),
-    })),
+  const navItems: NavItem[] = [
+    {
+      title: "Catalog",
+      url: `/`,
+      icon: Store as any,
+      items: [
+        {
+          title: "Product",
+          url: `/${routes.products}`,
+        }
+      ]
+    },
   ];
 
   return (
-    <Sidebar collapsible="icon"
+    <Sidebar collapsible="icon" variant="sidebar"
       {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="border-b">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={""} alt={"Grab Seller Central"} />
-                <AvatarFallback className="rounded-lg"><UserIcon /></AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">Seller Central</span>
-              </div>
+            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
+            <span className="truncate font-medium">Seller Central</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

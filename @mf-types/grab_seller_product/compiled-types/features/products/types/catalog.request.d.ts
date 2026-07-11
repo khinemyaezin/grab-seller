@@ -1,0 +1,71 @@
+export type VariationMatrixRequestVariation = {
+    typeId: string;
+    optionId: string;
+};
+export type VariationMatrixRequestVariantType = {
+    typeId: string;
+    options: {
+        optionId: string;
+    }[];
+};
+export type VariationMatrixRequest = {
+    variantTypes: VariationMatrixRequestVariantType[];
+    variants: {
+        matrixKey: string;
+        variations: VariationMatrixRequestVariation[];
+    }[];
+};
+export type CreateProductRequestVariation = {
+    typeId: string;
+    optionId: string;
+};
+export type CreateProductRequestVariationType = {
+    typeId: string;
+    options: {
+        optionId: string;
+    }[];
+};
+export type CreateProductRequestProduct = {
+    name: string;
+    categoryId: string;
+    condition: string;
+    slug: string;
+    variants: {
+        sku: string | undefined;
+        variations: CreateProductRequestVariation[];
+    }[];
+};
+export type CreateProductRequest = {
+    product: CreateProductRequestProduct;
+    variantTypes: CreateProductRequestVariationType[];
+};
+export type UPDATE_INTENT = "LEAVE_AS_IS" | "FULL_SYNC" | "COLLAPSE_TO_STANDALONE";
+export interface UpdateProductRequest {
+    name: string;
+    categoryId: string;
+    condition: string;
+    slug: string;
+    variantSync: {
+        intent: UPDATE_INTENT;
+        overrides: {
+            sku: string;
+            matrixKey: string;
+            variations: {
+                typeId: string;
+                optionId: string;
+            }[];
+        }[];
+        variantTypes: {
+            typeId: string;
+            options: {
+                optionId: string;
+                optionName: string;
+            }[];
+        }[];
+    };
+}
+export interface GetFeaturedProductRequest {
+    productName: string;
+    page: number;
+    size: number;
+}

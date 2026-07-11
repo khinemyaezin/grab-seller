@@ -22,6 +22,10 @@ export default defineConfig(({ mode }) => {
                 api: "http://localhost:3004/@mf-types.d.ts",
                 zip: "http://localhost:3004/@mf-types.zip",
               },
+              grab_seller_product: {
+                api: "http://localhost:3001/@mf-types.d.ts",
+                zip: "http://localhost:3001/@mf-types.zip",
+              },
             },
             abortOnError: false,
           },
@@ -37,13 +41,18 @@ export default defineConfig(({ mode }) => {
             name: "grab_seller_account",
             entry: "/mfe/seller-account/mf-manifest.json",
           },
+          grab_seller_product: {
+            type: "module",
+            name: "grab_seller_product",
+            entry: "/mfe/seller-product/mf-manifest.json",
+          },
         },
         shared: {
           react: { singleton: true, requiredVersion: "19.2.4" },
           "react-dom": { singleton: true, requiredVersion: "19.2.4" },
           "react-router": { singleton: true, requiredVersion: "7.18.0" },
           "@tanstack/react-query": { singleton: true, requiredVersion: "5.99.2" },
-          "@khinemyaezin/seller-api": { singleton: true, requiredVersion: "^1.0.1-canary-9998cda" },
+          "@khinemyaezin/seller-api": { singleton: true }
         },
       }),
     ],
@@ -71,6 +80,11 @@ export default defineConfig(({ mode }) => {
           target: "http://localhost:3004",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/mfe\/seller-account/, ""),
+        },
+        "/mfe/seller-product/": {
+          target: "http://localhost:3001",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/mfe\/seller-product/, ""),
         },
       },
     },
