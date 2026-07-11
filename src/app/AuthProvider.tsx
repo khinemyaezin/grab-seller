@@ -56,6 +56,7 @@ export function AuthProvider({
   useSessionEffects({
     snapshot,
     loadSession,
+    onSessionCleared
   });
 
   const value = useMemo<AuthContextValue>(() => ({
