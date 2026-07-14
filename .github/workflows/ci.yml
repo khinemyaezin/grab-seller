@@ -12,20 +12,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           path: grab-seller
-      - uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/grab-seller-auth
-          path: grab-seller-auth
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           registry-url: 'https://npm.pkg.github.com'
           scope: '@khinemyaezin'
           cache: npm
-          cache-dependency-path: |
-            grab-seller/package-lock.json
-            grab-seller-auth/package-lock.json
-      - run: npm ci && npm test && npm run build
-        working-directory: grab-seller-auth
-      - run: npm ci && npm test && npm run build
+          cache-dependency-path: grab-seller/package-lock.json
+      - run: npm ci && npm run build
         working-directory: grab-seller

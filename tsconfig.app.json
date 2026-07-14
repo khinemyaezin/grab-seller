@@ -24,7 +24,7 @@
       "grab_seller_product/*": ["@mf-types/grab_seller_product/*"],
       "grab_seller_inventory/*": ["@mf-types/grab_seller_inventory/*"]
     },
-    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"]
+    "types": ["vite/client"]
   },
   "include": ["src", "@mf-types"]
 }
