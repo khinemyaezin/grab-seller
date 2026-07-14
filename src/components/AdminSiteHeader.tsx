@@ -16,18 +16,32 @@ import { matchShellBreadcrumbs } from "@khinemyaezin/seller-contracts"
 function RouteBreadcrumb() {
   const { pathname } = useLocation()
   const [leaf, setLeaf] = useState<string | null>(null)
+  const [segments, setSegments] = useState<Record<string, string>>({})
 
   useEffect(() => {
-    return eventBus.subscribe("shell:breadcrumb:v1", ({ leaf: nextLeaf }) => {
-      setLeaf(nextLeaf)
+    return eventBus.subscribe("shell:breadcrumb:v1", (payload) => {
+      if (payload.leaf !== undefined) {
+        setLeaf(payload.leaf)
+      }
+      if (payload.segments) {
+        setSegments(prev => {
+          const newSegments = { ...prev }
+          Object.entries(payload.segments!).forEach(([key, value]) => {
+            if (value === null) delete newSegments[key]
+            else newSegments[key] = value
+          })
+          return newSegments
+        })
+      }
     })
   }, [])
 
   useEffect(() => {
     setLeaf(null)
+    setSegments({})
   }, [pathname])
 
-  const crumbs = matchShellBreadcrumbs(pathname).map((crumb, index, all) => {
+  const crumbs = matchShellBreadcrumbs(pathname, segments).map((crumb, index, all) => {
     const isLast = index === all.length - 1
     if (isLast && leaf) {
       return { ...crumb, label: leaf, to: undefined }

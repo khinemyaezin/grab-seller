@@ -11,4 +11,5 @@ export declare const catalogService: {
     updateProduct: (link: HateoasLink, request: UpdateProductRequest, headers?: Record<string, string>) => Promise<UpdateProductResponse>;
     deleteProduct: (link: HateoasLink, headers?: Record<string, string>) => Promise<DeleteProductResponse>;
     restoreProduct: (link: HateoasLink, headers?: Record<string, string>) => Promise<ProductModerationResponse>;
+    publishProduct: (link: HateoasLink, headers?: Record<string, string>) => Promise<ProductModerationResponse>;
 };

@@ -17,12 +17,14 @@ import { SimpleLayout } from "../components/SimpleLayout";
 const loadAuth = () => import("grab_seller_auth/Routes");
 const loadSellerAccount = () => import("grab_seller_account/Routes");
 const loadSellerProduct = () => import("grab_seller_product/Routes");
+const loadInventory = () => import("grab_seller_inventory/Routes")
 
 function ShellRoutes() {
   const { platform, isAuthenticated } = useAuth();
   const identityLink = useEntryLink("identity");
   const merchantLink = useEntryLink("merchant");
   const catalogLink = useEntryLink("catalog");
+  const inventoryLink = useEntryLink("inventory");
 
   useMerchantOnboardingEffect();
 
@@ -31,13 +33,25 @@ function ShellRoutes() {
       <Route path={routes.home} element={<DashboardLayout />}>
         <Route index element={<DashboardPage />} />
         {catalogLink && (
-          <Route path="/products/*" element={
+          <Route path={`/${routes.products}/*`} element={
             <RemoteBoundary
               loader={loadSellerProduct}
               label="Products"
               remoteProps={{
                 platform,
                 link: catalogLink
+              }}
+            />
+          } />
+        )}
+        {inventoryLink && (
+          <Route path={`${routes.locations}/*`} element={
+            <RemoteBoundary
+              loader={loadInventory}
+              label="Inventory"
+              remoteProps={{
+                platform,
+                link: inventoryLink
               }}
             />
           } />
