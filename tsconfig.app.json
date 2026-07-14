@@ -21,7 +21,8 @@
       "@khinemyaezin/seller-contracts": ["../grab-seller-shared-ui/packages/seller-contracts/src/index.ts"],
       "grab_seller_auth/*": ["@mf-types/grab_seller_auth/*"],
       "grab_seller_account/*": ["@mf-types/grab_seller_account/*"],
-      "grab_seller_product/*": ["@mf-types/grab_seller_product/*"]
+      "grab_seller_product/*": ["@mf-types/grab_seller_product/*"],
+      "grab_seller_inventory/*": ["@mf-types/grab_seller_inventory/*"]
     },
     "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"]
   },

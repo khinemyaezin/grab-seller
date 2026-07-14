@@ -16,3 +16,6 @@ export declare function useProductRestoreMutation(): import("@tanstack/react-que
 }, unknown>;
 export declare function useProductSearch(productsLink?: HateoasLink, filters?: GetFeaturedProductRequest): import("@tanstack/react-query").UseQueryResult<GetFeaturedProductResponse, Error>;
 export declare function useProductGet(productLink: HateoasLink | undefined, productId: string): import("@tanstack/react-query").UseQueryResult<GetFullProductResponse, Error>;
+export declare function useProductPublishMutation(): import("@tanstack/react-query").UseMutationResult<ProductModerationResponse, Error, {
+    link: HateoasLink;
+}, unknown>;

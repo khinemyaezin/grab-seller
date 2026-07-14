@@ -6,6 +6,8 @@ interface VariationOptionItemProps {
     getValues: UseFormGetValues<ProductFormValue>;
     onRemove: () => void;
     showTrash: boolean;
+    onSelectOption: () => void;
+    onClearOption?: () => void;
 }
-export declare function VariationOptionField({ typeIndex, index, onRemove, getValues, showTrash }: UseControllerProps<ProductFormValue> & VariationOptionItemProps): import("react").JSX.Element;
+export declare function VariationOptionField({ typeIndex, index, onRemove, getValues, showTrash, onSelectOption, onClearOption }: UseControllerProps<ProductFormValue> & VariationOptionItemProps): import("react").JSX.Element;
 export {};

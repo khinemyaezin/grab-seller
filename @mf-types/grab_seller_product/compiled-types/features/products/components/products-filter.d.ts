@@ -1,7 +1,5 @@
-import { ProductFilterFormValue } from "@/features/products/types";
+import type { ProductSearchCriteria } from "@/features/products/hooks/use-product-filter";
 export type ProductsFilterProps = {
-    value: ProductFilterFormValue;
-    pageSizes: number[];
-    onChange: (filter: ProductFilterFormValue) => void;
+    onChange: (criteria: ProductSearchCriteria) => void;
 };
-export default function ProductsFilter({ onChange, pageSizes, value }: ProductsFilterProps): import("react").JSX.Element;
+export default function ProductsFilter({ onChange }: ProductsFilterProps): import("react").JSX.Element;

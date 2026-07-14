@@ -1,4 +1,4 @@
-import { LayoutDashboardIcon, ChevronsUpDown, UserIcon, Carrot, Store } from "lucide-react";
+import { ChevronsUpDown, LayoutGrid, Store } from "lucide-react";
 import React, { Suspense, lazy } from "react";
 import {
   Sidebar,
@@ -9,7 +9,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from "@khinemyaezin/seller-ui/components/sidebar";
-import { NavItem, NavMain, ThemeToggle, UserAvatarDetails } from "@khinemyaezin/seller-ui";
+import { NavItem, NavMain, UserAvatarDetails } from "@khinemyaezin/seller-ui";
 import { useAuth } from "../app/AuthContext";
 import { useEntryLink } from "../app/EntryLinkContext";
 import { routes } from "@khinemyaezin/seller-contracts";
@@ -29,6 +29,17 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
         {
           title: "Product",
           url: `/${routes.products}`,
+        }
+      ]
+    },
+     {
+      title: "Inventory",
+      url: `/`,
+      icon: LayoutGrid as any,
+      items: [
+        {
+          title: "Locations",
+          url: `/${routes.locations}`,
         }
       ]
     },

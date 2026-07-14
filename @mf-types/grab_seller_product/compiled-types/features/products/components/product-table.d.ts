@@ -1,8 +1,9 @@
 import { HateoasLink } from "@khinemyaezin/seller-api";
-import { ProductFilterFormValue } from "@/features/products/types";
+import { ProductFilterFormValue, ProductLifecycleEvent } from "@/features/products/types";
 export type ProductTableProps = {
     link: HateoasLink;
     filter: ProductFilterFormValue;
     onPageChange?: (page: number) => void;
+    onLifecycleEvent?: (event: ProductLifecycleEvent) => void;
 };
-export default function ProductTable({ link, filter, onPageChange }: ProductTableProps): import("react").JSX.Element;
+export default function ProductTable({ link, filter, onPageChange, onLifecycleEvent }: ProductTableProps): import("react").JSX.Element;

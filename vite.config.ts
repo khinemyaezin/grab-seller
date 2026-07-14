@@ -26,6 +26,10 @@ export default defineConfig(({ mode }) => {
                 api: "http://localhost:3001/@mf-types.d.ts",
                 zip: "http://localhost:3001/@mf-types.zip",
               },
+              grab_seller_inventory: {
+                api: "http://localhost:3002/@mf-types.d.ts",
+                zip: "http://localhost:3002/@mf-types.zip",
+              },
             },
             abortOnError: false,
           },
@@ -45,6 +49,11 @@ export default defineConfig(({ mode }) => {
             type: "module",
             name: "grab_seller_product",
             entry: "/mfe/seller-product/mf-manifest.json",
+          },
+          grab_seller_inventory: {
+            type: "module",
+            name: "grab_seller_inventory",
+            entry: "/mfe/seller-inventory/mf-manifest.json",
           },
         },
         shared: {
@@ -85,6 +94,11 @@ export default defineConfig(({ mode }) => {
           target: "http://localhost:3001",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/mfe\/seller-product/, ""),
+        },
+        "/mfe/seller-inventory/": {
+          target: "http://localhost:3002",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/mfe\/seller-inventory/, ""),
         },
       },
     },
