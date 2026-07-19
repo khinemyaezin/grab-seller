@@ -4,7 +4,7 @@ export type ProductFormValue = {
     variationTypes: VariationType[];
 };
 export type ProductFilterFormValue = {
-    productName: string;
+    query: string;
     productStatus: ProductStatus | null;
     page: number;
     size: number;

@@ -64,8 +64,11 @@ export interface UpdateProductRequest {
         }[];
     };
 }
-export interface GetFeaturedProductRequest {
-    productName: string;
+export interface ProductSearchRequest {
+    query?: string;
+    variantStatus?: string;
+    categoryId?: string;
+    productStatus?: string;
     page: number;
     size: number;
 }

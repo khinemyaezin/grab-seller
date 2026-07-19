@@ -17,7 +17,8 @@ import { SimpleLayout } from "../components/SimpleLayout";
 const loadAuth = () => import("grab_seller_auth/Routes");
 const loadSellerAccount = () => import("grab_seller_account/Routes");
 const loadSellerProduct = () => import("grab_seller_product/Routes");
-const loadInventory = () => import("grab_seller_inventory/Routes")
+const loadInventoryLocations = () => import("grab_seller_inventory/LocationRoutes");
+const loadInventoryStock = () => import("grab_seller_inventory/StockRoutes");
 
 function ShellRoutes() {
   const { platform, isAuthenticated } = useAuth();
@@ -37,6 +38,7 @@ function ShellRoutes() {
             <RemoteBoundary
               loader={loadSellerProduct}
               label="Products"
+              key="seller-product"
               remoteProps={{
                 platform,
                 link: catalogLink
@@ -45,13 +47,28 @@ function ShellRoutes() {
           } />
         )}
         {inventoryLink && (
-          <Route path={`${routes.locations}/*`} element={
+          <Route path={`/${routes.locations}/*`} element={
             <RemoteBoundary
-              loader={loadInventory}
-              label="Inventory"
+              loader={loadInventoryLocations}
+              label="Locations"
+              key="seller-inventory-locations"
               remoteProps={{
                 platform,
-                link: inventoryLink
+                link: inventoryLink,
+              }}
+            />
+          } />
+        )}
+        {inventoryLink && (
+          <Route path={`/${routes.stock}/*`} element={
+            <RemoteBoundary
+              loader={loadInventoryStock}
+              label="Stock"
+              key="seller-inventory-stock"
+              remoteProps={{
+                platform,
+                link: inventoryLink,
+                catalogLink,
               }}
             />
           } />

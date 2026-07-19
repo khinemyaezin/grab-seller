@@ -1,10 +1,7 @@
-import type { HateoasLink } from "@khinemyaezin/seller-api";
-import { CreateZoneRequest, ListZoneResponse, UpdateZoneRequest } from "@/features/inventory/types";
+import type { HateoasLink, Pageable } from "@khinemyaezin/seller-api";
+import { CreateZoneRequest, ListZoneResponse, UpdateZoneRequest, ZonesFilterForm } from "@/features/inventory/types";
 import { ZoneResponse } from "@/features/inventory/types/inventory.response";
-export declare function useZones(link?: HateoasLink, locationId?: string, filter?: {
-    page?: number;
-    size?: number;
-}): import("@tanstack/react-query").UseQueryResult<ListZoneResponse, Error>;
+export declare function useZones(link?: HateoasLink, locationId?: string, filter?: ZonesFilterForm & Pageable): import("@tanstack/react-query").UseQueryResult<ListZoneResponse, Error>;
 export declare function useZone(link: HateoasLink, id: string): import("@tanstack/react-query").UseQueryResult<ZoneResponse, Error>;
 export declare function useAddZoneMutation(): import("@tanstack/react-query").UseMutationResult<ZoneResponse, Error, {
     link: HateoasLink;
