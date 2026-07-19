@@ -1,7 +1,7 @@
-import { Pageable } from "@khinemyaezin/seller-api";
 import { LocationLifecycleEvent } from "@/types";
+import type { LocationFilterFormValue } from "@/features/inventory/hooks/use-location-filter";
 export type LocationTableProps = {
-    filter: {} & Pageable;
+    filter: LocationFilterFormValue;
     onPageChange?: (page: number) => void;
     onLifecycleEvent?: (event: LocationLifecycleEvent) => void;
 };

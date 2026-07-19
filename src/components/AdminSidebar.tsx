@@ -40,6 +40,10 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
         {
           title: "Locations",
           url: `/${routes.locations}`,
+        },
+        {
+          title: "Stock",
+          url: `/${routes.stock}`,
         }
       ]
     },

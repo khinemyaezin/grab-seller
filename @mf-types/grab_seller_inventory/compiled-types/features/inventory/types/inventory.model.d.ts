@@ -1,13 +1,24 @@
 import type { HateoasLink } from "@khinemyaezin/seller-api";
-export type LocationType = "WAREHOUSE" | "STORE" | "DISTRIBUTION_CENTER";
+export type LocationType = "WAREHOUSE" | "STORE";
 export type ZoneType = "PICKING" | "STORAGE" | "STAGING" | "RETURNS" | "DAMAGED" | "RECEIVING";
 export declare const ZONE_TYPES: ZoneType[];
 export interface InventoryRoot {
     self?: HateoasLink;
-    pagedLocation?: HateoasLink;
+    searchLocation?: HateoasLink;
     location?: HateoasLink;
     createLocation?: HateoasLink;
+    searchInventoryItems?: HateoasLink;
+    createInventoryItem?: HateoasLink;
+    inventoryItem?: HateoasLink;
+    checkInventoryExistence?: HateoasLink;
+    searchProductVariants?: HateoasLink;
 }
+export type InventoryStatus = "ACTIVE" | "DISCONTINUED" | "OUT_OF_STOCK" | "SUSPENDED";
+export declare const INVENTORY_STATUSES: InventoryStatus[];
+export type ReceiveStockMovementType = "PURCHASE_ORDER_RECEIPT" | "CUSTOMER_RETURN" | "TRANSFER_IN" | "INITIAL_STOCK";
+export declare const RECEIVE_STOCK_TYPES: ReceiveStockMovementType[];
+export type AdjustmentReason = "CYCLE_COUNT" | "DAMAGED" | "EXPIRED" | "LOST" | "FOUND" | "THEFT" | "CORRECTION";
+export declare const ADJUSTMENT_REASONS: AdjustmentReason[];
 export interface LocationAddress {
     line1: string;
     line2: string;
@@ -23,30 +34,12 @@ export interface Bin {
     maxCapacity: number;
     active: boolean;
 }
-export interface BinResponse {
-    id: string;
-    zoneId: string;
-    code: string;
-    name: string;
-    maxCapacity: number;
-    active: boolean;
-    _links: Record<string, HateoasLink>;
-}
 export interface Zone {
     id: string;
     code: string;
     name: string;
     type: ZoneType;
     active: boolean;
-}
-export interface LocationResponse {
-    id: string;
-    code: string;
-    name: string;
-    type: LocationType;
-    active: boolean;
-    address: LocationAddress;
-    _links: Record<string, HateoasLink>;
 }
 export type LocationLifecycleEvent = {
     type: "titleResolved";
@@ -120,3 +113,38 @@ export type BinLifecycleEvent = {
 } | {
     type: "deleteFailed";
 };
+export type ItemLifecycleEvent = {
+    type: "titleResolved";
+    title: string;
+} | {
+    type: "navigation";
+    itemId: string;
+} | {
+    type: "created";
+} | {
+    type: "createFailed";
+    message: string;
+} | {
+    type: "received";
+} | {
+    type: "receiveFailed";
+} | {
+    type: "adjusted";
+} | {
+    type: "adjustFailed";
+};
+/** Gap kinds surfaced on the stock coverage page. */
+export type CoverageGapKind = "UNSTOCKED" | "ZERO_AVAILABLE" | "LOW_STOCK";
+export declare const COVERAGE_GAP_KINDS: CoverageGapKind[];
+export interface CoverageRow {
+    key: string;
+    sku: string;
+    productId?: string;
+    productName?: string;
+    productVariantId?: string | null;
+    locationId: string;
+    gap: CoverageGapKind;
+    available?: number;
+    reorderPoint?: number;
+    itemId?: string;
+}

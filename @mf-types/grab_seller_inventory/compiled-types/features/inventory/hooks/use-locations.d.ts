@@ -1,11 +1,7 @@
 import type { HateoasLink } from "@khinemyaezin/seller-api";
-import type { LocationResponse, LocationsResponse, CreateLocationRequest, UpdateLocationRequest, LocationType } from "@/features/inventory/types";
-export declare function useLocations(locationsLink?: HateoasLink, filters?: {
-    active?: boolean;
-    type?: LocationType;
-    page?: number;
-    size?: number;
-}): import("@tanstack/react-query").UseQueryResult<LocationsResponse, Error>;
+import type { LocationResponse, LocationsResponse, CreateLocationRequest, UpdateLocationRequest, LocationsFilterForm } from "@/features/inventory/types";
+import type { Pageable } from "@khinemyaezin/seller-api";
+export declare function useLocations(locationsLink?: HateoasLink, filters?: LocationsFilterForm & Pageable): import("@tanstack/react-query").UseQueryResult<LocationsResponse, Error>;
 export declare function useLocation(link?: HateoasLink, locationId?: string): import("@tanstack/react-query").UseQueryResult<LocationResponse, Error>;
 export declare function useCreateLocationMutation(): import("@tanstack/react-query").UseMutationResult<LocationResponse, Error, {
     link: HateoasLink;
