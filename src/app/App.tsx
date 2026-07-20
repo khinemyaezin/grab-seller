@@ -19,6 +19,7 @@ const loadSellerAccount = () => import("grab_seller_account/Routes");
 const loadSellerProduct = () => import("grab_seller_product/Routes");
 const loadInventoryLocations = () => import("grab_seller_inventory/LocationRoutes");
 const loadInventoryStock = () => import("grab_seller_inventory/StockRoutes");
+const loadInventoryDashboard = () => import("grab_seller_inventory/DashboardRoutes");
 
 function ShellRoutes() {
   const { platform, isAuthenticated } = useAuth();
@@ -42,6 +43,19 @@ function ShellRoutes() {
               remoteProps={{
                 platform,
                 link: catalogLink
+              }}
+            />
+          } />
+        )}
+        {inventoryLink && (
+          <Route path={`/${routes.inventory}/*`} element={
+            <RemoteBoundary
+              loader={loadInventoryDashboard}
+              label="Inventory"
+              key="seller-inventory-dashboard"
+              remoteProps={{
+                platform,
+                link: inventoryLink,
               }}
             />
           } />

@@ -11,7 +11,9 @@ export interface InventoryRoot {
     createInventoryItem?: HateoasLink;
     inventoryItem?: HateoasLink;
     checkInventoryExistence?: HateoasLink;
+    inventorySummary?: HateoasLink;
     searchProductVariants?: HateoasLink;
+    reorderSuggestions?: HateoasLink;
 }
 export type InventoryStatus = "ACTIVE" | "DISCONTINUED" | "OUT_OF_STOCK" | "SUSPENDED";
 export declare const INVENTORY_STATUSES: InventoryStatus[];
@@ -132,6 +134,46 @@ export type ItemLifecycleEvent = {
     type: "adjusted";
 } | {
     type: "adjustFailed";
+} | {
+    type: "damaged";
+} | {
+    type: "damageFailed";
+} | {
+    type: "writtenOff";
+} | {
+    type: "writeOffFailed";
+} | {
+    type: "returnedToVendor";
+} | {
+    type: "returnToVendorFailed";
+} | {
+    type: "suspended";
+} | {
+    type: "suspendFailed";
+} | {
+    type: "activated";
+} | {
+    type: "activateFailed";
+} | {
+    type: "discontinued";
+} | {
+    type: "discontinueFailed";
+} | {
+    type: "transferred";
+} | {
+    type: "transferFailed";
+} | {
+    type: "inTransitAnnounced";
+} | {
+    type: "inTransitAnnounceFailed";
+} | {
+    type: "inTransitReceived";
+} | {
+    type: "inTransitReceiveFailed";
+} | {
+    type: "reorderConfigUpdated";
+} | {
+    type: "reorderConfigUpdateFailed";
 };
 /** Gap kinds surfaced on the stock coverage page. */
 export type CoverageGapKind = "UNSTOCKED" | "ZERO_AVAILABLE" | "LOW_STOCK";
