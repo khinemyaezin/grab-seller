@@ -34,7 +34,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
     },
      {
       title: "Inventory",
-      url: `/`,
+      url: `/${routes.inventory}`,
       icon: LayoutGrid as any,
       items: [
         {
