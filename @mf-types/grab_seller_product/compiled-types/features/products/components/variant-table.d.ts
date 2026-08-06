@@ -1,3 +1,5 @@
-type VariantTableProps = {};
-export declare function VariantTable({}: VariantTableProps): false | import("react").JSX.Element;
+type VariantTableProps = {
+    onAllVariantsDeleted?: () => void;
+};
+export declare function VariantTable({ onAllVariantsDeleted }: VariantTableProps): false | import("react").JSX.Element;
 export {};

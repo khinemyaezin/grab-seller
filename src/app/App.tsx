@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, lazy, type ComponentType } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import { ThemeProvider } from "@khinemyaezin/seller-ui";
-import { routes, type SellerRuntimeConfig } from "@khinemyaezin/seller-contracts";
+import {
+  PRODUCT_EXTENSION_SLOTS,
+  routes,
+  type SellerRuntimeConfig,
+} from "@khinemyaezin/seller-contracts";
 import { useAuth } from "./AuthContext";
 import { RemoteBoundary } from "../components/RemoteBoundary";
 import { AuthProvider } from "./AuthProvider";
@@ -11,7 +15,6 @@ import { useEntryLink } from "./EntryLinkContext";
 import { DashboardLayout } from "../components/DashboardLayout";
 import DashboardPage from "../pages/DashboardPage";
 import { useMerchantOnboardingEffect } from "../hooks";
-
 import { SimpleLayout } from "../components/SimpleLayout";
 
 const loadAuth = () => import("grab_seller_auth/Routes");
@@ -21,99 +24,130 @@ const loadInventoryLocations = () => import("grab_seller_inventory/LocationRoute
 const loadInventoryStock = () => import("grab_seller_inventory/StockRoutes");
 const loadInventoryDashboard = () => import("grab_seller_inventory/DashboardRoutes");
 
+const ProductPricingWidget = lazy(() => import("grab_seller_pricing/ProductPricingWidget"));
+const ProductInventoryWidget = lazy(() => import("grab_seller_inventory/ProductInventoryWidget"));
+
 function ShellRoutes() {
-  const { platform, isAuthenticated } = useAuth();
+  const { platform } = useAuth();
   const identityLink = useEntryLink("identity");
   const merchantLink = useEntryLink("merchant");
   const catalogLink = useEntryLink("catalog");
   const inventoryLink = useEntryLink("inventory");
+  const pricingLink = useEntryLink("pricing");
 
   useMerchantOnboardingEffect();
+
+  const productExtensions: Record<string, ComponentType<any>> = {
+    [PRODUCT_EXTENSION_SLOTS.CREATE_PRICING]: (props) => (
+      <ProductPricingWidget {...props} platform={platform} entryLink={pricingLink!} />
+    ),
+    [PRODUCT_EXTENSION_SLOTS.CREATE_INVENTORY]: (props) => (
+      <ProductInventoryWidget {...props} platform={platform} entryLink={inventoryLink!} />
+    ),
+  };
 
   return (
     <Routes>
       <Route path={routes.home} element={<DashboardLayout />}>
         <Route index element={<DashboardPage />} />
         {catalogLink && (
-          <Route path={`/${routes.products}/*`} element={
-            <RemoteBoundary
-              loader={loadSellerProduct}
-              label="Products"
-              key="seller-product"
-              remoteProps={{
-                platform,
-                link: catalogLink
-              }}
-            />
-          } />
+          <Route
+            path={`/${routes.products}/*`}
+            element={
+              <RemoteBoundary
+                loader={loadSellerProduct}
+                label="Products"
+                key="seller-product"
+                remoteProps={{
+                  platform,
+                  link: catalogLink,
+                  extensions: productExtensions
+                }}
+              />
+            }
+          />
         )}
         {inventoryLink && (
-          <Route path={`/${routes.inventory}/*`} element={
-            <RemoteBoundary
-              loader={loadInventoryDashboard}
-              label="Inventory"
-              key="seller-inventory-dashboard"
-              remoteProps={{
-                platform,
-                link: inventoryLink,
-              }}
-            />
-          } />
+          <Route
+            path={`/${routes.inventory}/*`}
+            element={
+              <RemoteBoundary
+                loader={loadInventoryDashboard}
+                label="Inventory"
+                key="seller-inventory-dashboard"
+                remoteProps={{
+                  platform,
+                  link: inventoryLink,
+                }}
+              />
+            }
+          />
         )}
         {inventoryLink && (
-          <Route path={`/${routes.locations}/*`} element={
-            <RemoteBoundary
-              loader={loadInventoryLocations}
-              label="Locations"
-              key="seller-inventory-locations"
-              remoteProps={{
-                platform,
-                link: inventoryLink,
-              }}
-            />
-          } />
+          <Route
+            path={`/${routes.locations}/*`}
+            element={
+              <RemoteBoundary
+                loader={loadInventoryLocations}
+                label="Locations"
+                key="seller-inventory-locations"
+                remoteProps={{
+                  platform,
+                  link: inventoryLink,
+                }}
+              />
+            }
+          />
         )}
         {inventoryLink && (
-          <Route path={`/${routes.stock}/*`} element={
-            <RemoteBoundary
-              loader={loadInventoryStock}
-              label="Stock"
-              key="seller-inventory-stock"
-              remoteProps={{
-                platform,
-                link: inventoryLink,
-                catalogLink,
-              }}
-            />
-          } />
+          <Route
+            path={`/${routes.stock}/*`}
+            element={
+              <RemoteBoundary
+                loader={loadInventoryStock}
+                label="Stock"
+                key="seller-inventory-stock"
+                remoteProps={{
+                  platform,
+                  link: inventoryLink,
+                  catalogLink,
+                }}
+              />
+            }
+          />
         )}
       </Route>
       <Route element={<SimpleLayout />}>
         {merchantLink && (
-          <Route path="/onboarding/*" element={
-            <RemoteBoundary
-              loader={loadSellerAccount}
-              label="Onboarding"
-              remoteProps={{
-                platform,
-                link: merchantLink
-              }}
-            />
-          }
+          <Route
+            path="/onboarding/*"
+            element={
+              <RemoteBoundary
+                loader={loadSellerAccount}
+                label="Onboarding"
+                remoteProps={{
+                  platform,
+                  link: merchantLink,
+                }}
+              />
+            }
           />
         )}
         {identityLink && (
-          <Route path="/*" element={
-            <RemoteBoundary
-              key="seller-auth"
-              loader={loadAuth}
-              label="Auth"
-              remoteProps={{
-                platform,
-                link: identityLink
-              }}
-            />
-          } />
+          <Route
+            path="/*"
+            element={
+              <RemoteBoundary
+                key="seller-auth"
+                loader={loadAuth}
+                label="Auth"
+                remoteProps={{
+                  platform,
+                  link: identityLink,
+                }}
+              />
+            }
+          />
         )}
       </Route>
     </Routes>
