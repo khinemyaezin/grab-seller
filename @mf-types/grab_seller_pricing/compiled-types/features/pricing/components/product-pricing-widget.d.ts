@@ -1,21 +1,9 @@
-import type { HateoasLink } from "@khinemyaezin/seller-api";
-import type { SellerPlatform } from "@khinemyaezin/seller-contracts";
-export type PricingLineValue = {
-    sku: string;
-    title?: string;
-    currencyCode: string;
-    amount: number | "";
-    minQuantity?: number | null;
-    maxQuantity?: number | null;
-};
-export type PricingFieldName = "amount" | "currencyCode";
+import { PricingPayload } from "@khinemyaezin/seller-contracts";
+import { Ref } from "react";
+import { PricingWidgetHandle } from "./product-pricing-widget-exposed";
 export type ProductPricingWidgetProps = {
-    sku: string;
-    value: PricingLineValue;
-    onChange: (next: PricingLineValue) => void;
-    errors?: Partial<Record<PricingFieldName, string>>;
-    onBlur?: (field: PricingFieldName) => void;
-    platform?: SellerPlatform;
-    entryLink: HateoasLink;
+    value?: Partial<PricingPayload>;
+    onChange: (value: PricingPayload) => void;
+    ref: Ref<PricingWidgetHandle>;
 };
-export default function ProductPricingWidget({ sku, value, onChange, errors, onBlur, }: ProductPricingWidgetProps): import("react").JSX.Element;
+export default function ProductPricingWidget({ value, onChange, ref }: ProductPricingWidgetProps): import("react").JSX.Element;

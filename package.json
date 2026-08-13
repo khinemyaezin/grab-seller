@@ -10,15 +10,16 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
-    "@khinemyaezin/seller-api": "^1.0.1-canary-59d4262",
-    "@khinemyaezin/seller-contracts": "^1.0.1-canary-59d4262",
-    "@khinemyaezin/seller-ui": "^1.0.1-canary-59d4262",
+    "@khinemyaezin/seller-api": "file:../grab-seller-shared/packages/seller-api",
+    "@khinemyaezin/seller-contracts": "file:../grab-seller-shared/packages/seller-contracts",
+    "@khinemyaezin/seller-ui": "file:../grab-seller-shared/packages/seller-ui",
     "@tanstack/react-query": "5.99.2",
     "lucide-react": "1.8.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.74.0",
-    "react-router": "7.18.0"
+    "react-router": "7.18.0",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@module-federation/vite": "1.16.9",

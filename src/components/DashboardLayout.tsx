@@ -3,19 +3,21 @@ import { Outlet } from "react-router";
 import { SidebarProvider } from "@khinemyaezin/seller-ui/components/sidebar";
 import { TooltipProvider } from "@khinemyaezin/seller-ui/components/tooltip";
 import { Toaster } from "@khinemyaezin/seller-ui";
-import { eventBus } from "@khinemyaezin/seller-api";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminSiteHeader } from "./AdminSiteHeader";
 import { toast } from "@khinemyaezin/seller-ui/components/index";
+import { useAuth } from "../app/AuthContext";
 
 export function DashboardLayout() {
+  const { platform } = useAuth();
+
   useEffect(() => {
-    const unsubscribe = eventBus.subscribe("shell:toast:v1", (payload) => {
+    const unsubscribe = platform.events.subscribe("shell:toast:v1", (payload) => {
       const { type, message, description, position } = payload;
       toast[type](message, { description, position });
     });
     return unsubscribe;
-  }, []);
+  }, [platform.events]);
 
   return (
     <TooltipProvider>
@@ -25,7 +27,7 @@ export function DashboardLayout() {
       } as Record<string, string>}>
         <div className="flex flex-1">
           <AdminSidebar />
-          <main className="min-h-screen flex-1 bg-[oklch(98.5%_0.002_247.839)] dark:bg-black">
+          <main className="min-h-screen flex-1 bg-background dark:bg-black">
             <AdminSiteHeader />
             <Toaster />
             <Outlet />

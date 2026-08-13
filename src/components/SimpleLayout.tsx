@@ -8,7 +8,7 @@ export function SimpleLayout() {
   const { isAuthenticated, logout } = useAuth();
 
   return (
-    <div className="bg-background text-foreground">
+    <div className="text-foreground">
       <header className="fixed top-0 left-0 right-0 z-50">
         <div className="flex h-14 items-center justify-end px-8 gap-3">
           <ThemeToggle />

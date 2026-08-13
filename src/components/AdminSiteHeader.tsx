@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from "react"
 import { Link, useLocation } from "react-router"
+import { matchShellBreadcrumbs } from "@khinemyaezin/seller-contracts"
 import { ThemeToggle } from "@khinemyaezin/seller-ui"
 import {
   Breadcrumb,
@@ -10,16 +11,16 @@ import {
   BreadcrumbSeparator,
 } from "@khinemyaezin/seller-ui/components/breadcrumb"
 import { SidebarTrigger } from "@khinemyaezin/seller-ui/components/index"
-import { eventBus } from "@khinemyaezin/seller-api"
-import { matchShellBreadcrumbs } from "@khinemyaezin/seller-contracts"
+import { useAuth } from "../app/AuthContext"
 
 function RouteBreadcrumb() {
   const { pathname } = useLocation()
+  const { platform } = useAuth()
   const [leaf, setLeaf] = useState<string | null>(null)
   const [segments, setSegments] = useState<Record<string, string>>({})
 
   useEffect(() => {
-    return eventBus.subscribe("shell:breadcrumb:v1", (payload) => {
+    return platform.events.subscribe("shell:breadcrumb:v1", (payload) => {
       if (payload.leaf !== undefined) {
         setLeaf(payload.leaf)
       }
@@ -34,7 +35,7 @@ function RouteBreadcrumb() {
         })
       }
     })
-  }, [])
+  }, [platform.events])
 
   useEffect(() => {
     setLeaf(null)

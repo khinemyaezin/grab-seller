@@ -21,7 +21,6 @@ export type ProductFormValue = {
     variationTypes: VariationType[];
     pricingLines: PricingLineFormValue[];
     inventoryLines: InventoryLineFormValue[];
-    inventoryLocationId?: string;
 };
 export type ProductFilterFormValue = {
     query: string;
