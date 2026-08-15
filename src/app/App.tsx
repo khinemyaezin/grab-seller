@@ -27,6 +27,7 @@ const loadInventoryDashboard = () => import("grab_seller_inventory/DashboardRout
 const ProductPricingWidget = lazy(() => import("grab_seller_pricing/ProductPricingWidget"));
 const InlinePricingWidget = lazy(() => import("grab_seller_pricing/InlinePricingWidget"));
 const ProductInventoryWidget = lazy(() => import("grab_seller_inventory/ProductInventoryWidget"));
+const InlineInventoryWidget = lazy(() => import("grab_seller_inventory/InlineInventoryWidget"));
 
 function ShellRoutes() {
   const { platform } = useAuth();
@@ -44,7 +45,13 @@ function ShellRoutes() {
     ),
     [PRODUCT_EXTENSION_SLOTS.CREATE_PRICING_INLINE]: (props) => (
       <InlinePricingWidget {...props} platform={platform} entryLink={pricingLink!} />
-    )
+    ),
+    [PRODUCT_EXTENSION_SLOTS.CREATE_INVENTORY]: (props) => (
+      <ProductInventoryWidget {...props} platform={platform} entryLink={inventoryLink!} />
+    ),
+    [PRODUCT_EXTENSION_SLOTS.CREATE_INVENTORY_INLINE]: (props) => (
+      <InlineInventoryWidget {...props} platform={platform} entryLink={inventoryLink!} />
+    ),
   };
 
   return (

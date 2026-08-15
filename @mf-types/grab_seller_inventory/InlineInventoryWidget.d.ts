@@ -1,0 +1,2 @@
+export * from './compiled-types/features/inventory/components/item/inline-inventory-widget-exposed';
+export { default } from './compiled-types/features/inventory/components/item/inline-inventory-widget-exposed';

@@ -1,13 +1,10 @@
-import { type HateoasLink } from "@khinemyaezin/seller-api";
-import { PricingPayload, type ExtensionMountProps, type SellerPlatform } from "@khinemyaezin/seller-contracts";
-export type ProductPricingWidgetExposedProps = ExtensionMountProps & {
-    entryLink: HateoasLink;
-    platform?: SellerPlatform;
-};
+import { PricingPayload, type ExtensionMountProps } from "@khinemyaezin/seller-contracts";
+export type ProductPricingWidgetExposedProps = ExtensionMountProps;
 export type PricingWidgetHandle = {
     validate: () => Promise<{
         value?: PricingPayload;
         errors?: Record<string, string>;
     }>;
+    getValues: () => PricingPayload;
 };
-export default function ProductPricingWidgetExposed({ instanceId, slotId, context, platform, entryLink, }: ProductPricingWidgetExposedProps): import("react").JSX.Element | null;
+export default function ProductPricingWidgetExposed({ groupId, slotId, context, platform, entryLink, }: ProductPricingWidgetExposedProps): import("react").JSX.Element | null;

@@ -4,4 +4,4 @@ export type ProductNewFormProps = {
     link: HateoasLink;
     onLifecycleEvent?: (event: ProductLifecycleEvent) => void;
 };
-export default function ProductNewForm({}: ProductNewFormProps): import("react").JSX.Element;
+export default function ProductNewForm({ link, onLifecycleEvent }: ProductNewFormProps): import("react").JSX.Element;

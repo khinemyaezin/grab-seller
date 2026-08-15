@@ -39,6 +39,10 @@ export type CreateProductRequest = {
     product: CreateProductRequestProduct;
     variantTypes: CreateProductRequestVariationType[];
 };
+export type CreateSellableProductRequest = CreateProductRequest & {
+    pricingLines: CreateSellableProductPricingLine[];
+    inventoryLines: CreateSellableProductInventoryLine[];
+};
 export type CreateSellableProductPricingLine = {
     sku: string;
     title?: string;
@@ -53,6 +57,7 @@ export type CreateSellableProductPricingLine = {
         priority?: number;
     }[];
 };
+export type ProductContributions = Partial<Pick<CreateSellableProductRequest, "pricingLines" | "inventoryLines">>;
 export type CreateSellableProductInventoryLine = {
     sku: string;
     locationId: string;
@@ -61,13 +66,6 @@ export type CreateSellableProductInventoryLine = {
     reorderPoint?: number;
     reorderQuantity?: number;
     maxStock?: number;
-};
-export type CreateSellableProductRequest = {
-    product: CreateProductRequestProduct;
-    variantTypes: CreateProductRequestVariationType[];
-    pricingLines: CreateSellableProductPricingLine[];
-    inventoryLines: CreateSellableProductInventoryLine[];
-    idempotencyKey?: string;
 };
 export type UPDATE_INTENT = "LEAVE_AS_IS" | "FULL_SYNC" | "COLLAPSE_TO_STANDALONE";
 export interface UpdateProductRequest {

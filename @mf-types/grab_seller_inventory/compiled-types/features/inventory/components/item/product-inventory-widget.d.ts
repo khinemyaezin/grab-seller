@@ -1,22 +1,10 @@
-import type { HateoasLink } from "@khinemyaezin/seller-api";
-import type { SellerPlatform } from "@khinemyaezin/seller-contracts";
-export type InventoryLineValue = {
-    sku: string;
-    locationId: string;
-    initialQuantity: number | "";
-    safetyStock?: number | "";
-    reorderPoint?: number | "";
-    reorderQuantity?: number | "";
-    maxStock?: number | "";
-};
-export type InventoryFieldName = "locationId" | "initialQuantity" | "safetyStock";
+import { InventoryCreateContext, InventoryPayload } from "@khinemyaezin/seller-contracts";
+import { Ref } from "react";
+import type { InventoryWidgetHandle } from "./product-inventory-widget-exposed";
 export type ProductInventoryWidgetProps = {
-    sku: string;
-    value: InventoryLineValue;
-    onChange: (next: InventoryLineValue) => void;
-    errors?: Partial<Record<InventoryFieldName, string>>;
-    onBlur?: (field: InventoryFieldName) => void;
-    platform?: SellerPlatform;
-    entryLink: HateoasLink;
+    context?: InventoryCreateContext;
+    value?: InventoryPayload;
+    onChange: (value: InventoryPayload) => void;
+    ref: Ref<InventoryWidgetHandle>;
 };
-export default function ProductInventoryWidget({ sku, value, onChange, errors, onBlur, }: ProductInventoryWidgetProps): import("react").JSX.Element;
+export default function ProductInventoryWidget({ context, value, onChange, ref, }: ProductInventoryWidgetProps): import("react").JSX.Element;

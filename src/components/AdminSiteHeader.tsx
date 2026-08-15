@@ -1,6 +1,5 @@
-import { Fragment, useEffect, useState } from "react"
-import { Link, useLocation } from "react-router"
-import { matchShellBreadcrumbs } from "@khinemyaezin/seller-contracts"
+import { Fragment } from "react"
+import { Link } from "react-router"
 import { ThemeToggle } from "@khinemyaezin/seller-ui"
 import {
   Breadcrumb,
@@ -11,44 +10,10 @@ import {
   BreadcrumbSeparator,
 } from "@khinemyaezin/seller-ui/components/breadcrumb"
 import { SidebarTrigger } from "@khinemyaezin/seller-ui/components/index"
-import { useAuth } from "../app/AuthContext"
+import { useBreadcrumbs } from "../hooks/use-breadcrumbs"
 
 function RouteBreadcrumb() {
-  const { pathname } = useLocation()
-  const { platform } = useAuth()
-  const [leaf, setLeaf] = useState<string | null>(null)
-  const [segments, setSegments] = useState<Record<string, string>>({})
-
-  useEffect(() => {
-    return platform.events.subscribe("shell:breadcrumb:v1", (payload) => {
-      if (payload.leaf !== undefined) {
-        setLeaf(payload.leaf)
-      }
-      if (payload.segments) {
-        setSegments(prev => {
-          const newSegments = { ...prev }
-          Object.entries(payload.segments!).forEach(([key, value]) => {
-            if (value === null) delete newSegments[key]
-            else newSegments[key] = value
-          })
-          return newSegments
-        })
-      }
-    })
-  }, [platform.events])
-
-  useEffect(() => {
-    setLeaf(null)
-    setSegments({})
-  }, [pathname])
-
-  const crumbs = matchShellBreadcrumbs(pathname, segments).map((crumb, index, all) => {
-    const isLast = index === all.length - 1
-    if (isLast && leaf) {
-      return { ...crumb, label: leaf, to: undefined }
-    }
-    return crumb
-  })
+  const crumbs = useBreadcrumbs()
 
   return (
     <Breadcrumb>
