@@ -30,6 +30,10 @@ export default defineConfig(({ mode }) => {
                 api: "http://localhost:3002/@mf-types.d.ts",
                 zip: "http://localhost:3002/@mf-types.zip",
               },
+              grab_seller_pricing: {
+                api: "http://localhost:3005/@mf-types.d.ts",
+                zip: "http://localhost:3005/@mf-types.zip",
+              },
             },
             abortOnError: false,
           },
@@ -55,15 +59,22 @@ export default defineConfig(({ mode }) => {
             name: "grab_seller_inventory",
             entry: "/mfe/seller-inventory/mf-manifest.json",
           },
+          grab_seller_pricing: {
+            type: "module",
+            name: "grab_seller_pricing",
+            entry: "/mfe/seller-pricing/mf-manifest.json",
+          },
         },
         shared: {
-          react: { singleton: true, requiredVersion: "19.2.4" },
+          "react": { singleton: true, requiredVersion: "19.2.4" },
           "react-dom": { singleton: true, requiredVersion: "19.2.4" },
           "react-router": { singleton: true, requiredVersion: "7.18.0" },
+          "react-hook-form": { singleton: true, requiredVersion: "7.74.0" },
+          "recharts": { singleton: true },
           "@tanstack/react-query": { singleton: true, requiredVersion: "5.99.2" },
-          "@khinemyaezin/seller-api": { singleton: true },
-          "@khinemyaezin/seller-ui": { singleton: true },
-          "recharts": { singleton: true }
+          "@khinemyaezin/seller-api": { singleton: true, version: "^1.0.1-canary-b5b1875" },
+          "@khinemyaezin/seller-ui": { singleton: true, version: "^1.0.1-canary-b5b1875" },
+          "@khinemyaezin/seller-contracts": { singleton: true, version: "^1.0.1-canary-b5b1875" },
         },
       }),
     ],
@@ -78,6 +89,8 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_API_URL,
           changeOrigin: true,
           xfwd: true,
+          timeout: 0,
+          proxyTimeout: 0,
           headers: {
             "X-Platform": "SELLER_PORTAL"
           }
@@ -101,6 +114,11 @@ export default defineConfig(({ mode }) => {
           target: "http://localhost:3002",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/mfe\/seller-inventory/, ""),
+        },
+        "/mfe/seller-pricing/": {
+          target: "http://localhost:3005",
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/mfe\/seller-pricing/, ""),
         },
       },
     },

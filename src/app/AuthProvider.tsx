@@ -1,7 +1,12 @@
 import { ReactNode, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { eventBus, configureApi } from "@khinemyaezin/seller-api";
-import { SellerRuntimeConfig, SessionApi, SellerPlatform } from "@khinemyaezin/seller-contracts";
+import { configureApi, createHostEventBus } from "@khinemyaezin/seller-api";
+import {
+  type PlatformEvents,
+  SellerRuntimeConfig,
+  SessionApi,
+  SellerPlatform,
+} from "@khinemyaezin/seller-contracts";
 
 import { AuthContextValue, AuthContext } from "./AuthContext";
 import { useAuthService, useSessionEffects, useSessionOperations, useSessionState } from "../hooks";
@@ -17,7 +22,7 @@ export function AuthProvider({
 }) {
   const navigate = useNavigate();
   const authService = useAuthService();
-
+  const events = useMemo<PlatformEvents>(() => createHostEventBus(), []);
   const { snapshot, snapshotRef, publishSnapshot, subscribe } = useSessionState();
 
   const { loadSession, expireSession, refresh, logout } = useSessionOperations({
@@ -25,6 +30,7 @@ export function AuthProvider({
     publishSnapshot,
     snapshotRef,
     onSessionCleared,
+    events,
   });
 
   const session = useMemo<SessionApi>(() => ({
@@ -37,14 +43,14 @@ export function AuthProvider({
   const platform = useMemo<SellerPlatform>(() => Object.freeze({
     version: "1.0.0",
     session,
-    events: eventBus,
+    events,
     navigation: {
       navigate(path: string, options?: { replace?: boolean }) {
         navigate(path, { replace: options?.replace });
       },
     },
     config: runtimeConfig,
-  }), [navigate, runtimeConfig, session]);
+  }), [events, navigate, runtimeConfig, session]);
 
   useEffect(() => {
     configureApi({
@@ -56,7 +62,8 @@ export function AuthProvider({
   useSessionEffects({
     snapshot,
     loadSession,
-    onSessionCleared
+    onSessionCleared,
+    events,
   });
 
   const value = useMemo<AuthContextValue>(() => ({

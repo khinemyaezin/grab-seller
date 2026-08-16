@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { eventBus } from "@khinemyaezin/seller-api";
-import { SessionSnapshot, routes } from "@khinemyaezin/seller-contracts";
+import {
+  type PlatformEvents,
+  SessionSnapshot,
+  routes,
+} from "@khinemyaezin/seller-contracts";
 
 const GLOBAL_SCOPE_KEY = "*";
 
@@ -22,10 +25,12 @@ export function useSessionEffects({
   snapshot,
   loadSession,
   onSessionCleared,
+  events,
 }: {
   snapshot: SessionSnapshot;
   loadSession: () => Promise<SessionSnapshot>;
-  onSessionCleared?: () => void
+  onSessionCleared?: () => void;
+  events: PlatformEvents;
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -85,15 +90,15 @@ export function useSessionEffects({
       }
     };
 
-    const unsubLogin = eventBus.subscribe("auth:login-success:v1", () => {
+    const unsubLogin = events.subscribe("auth:login-success:v1", () => {
       void loadSession().then(handleAuthRedirect);
     });
 
-    const unsubRegister = eventBus.subscribe("auth:registration-success:v1", () => {
+    const unsubRegister = events.subscribe("auth:registration-success:v1", () => {
       navigate(`/${routes.login}`, { replace: true });
     });
 
-    const unsubAccessContextOnSelect = eventBus.subscribe("auth:context-selected:v1", () => {
+    const unsubAccessContextOnSelect = events.subscribe("auth:context-selected:v1", () => {
       onSessionCleared?.();
       void loadSession().then(handleAuthRedirect);
     });
@@ -103,5 +108,5 @@ export function useSessionEffects({
       unsubRegister();
       unsubAccessContextOnSelect();
     };
-  }, [loadSession, navigate]);
+  }, [events, loadSession, navigate, onSessionCleared]);
 }

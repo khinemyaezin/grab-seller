@@ -1,7 +1,10 @@
 import { useCallback, useRef } from "react";
 import { useNavigate } from "react-router";
-import { eventBus } from "@khinemyaezin/seller-api";
-import { SessionSnapshot, routes } from "@khinemyaezin/seller-contracts";
+import {
+  type PlatformEvents,
+  SessionSnapshot,
+  routes,
+} from "@khinemyaezin/seller-contracts";
 import { RefreshCoordinator } from "../app/RefreshCoordinator";
 import { profileToSnapshot } from "./use-session-state";
 import { createAuthService } from "grab_seller_auth/AuthService";
@@ -13,11 +16,13 @@ export function useSessionOperations({
   publishSnapshot,
   snapshotRef,
   onSessionCleared,
+  events,
 }: {
   authService: AuthService;
   publishSnapshot: (next: SessionSnapshot) => void;
   snapshotRef: React.RefObject<SessionSnapshot>;
   onSessionCleared?: () => void;
+  events: PlatformEvents;
 }) {
   const navigate = useNavigate();
   const refreshCoordinatorRef = useRef(new RefreshCoordinator());
@@ -26,8 +31,8 @@ export function useSessionOperations({
     const next: SessionSnapshot = { status: "anonymous" };
     publishSnapshot(next);
     onSessionCleared?.();
-    eventBus.publish("auth:session-expired:v1", {});
-  }, [onSessionCleared, publishSnapshot]);
+    events.emit("auth:session-expired:v1", {});
+  }, [events, onSessionCleared, publishSnapshot]);
 
   const loadSession = useCallback(async () => {
     if (!authService) return snapshotRef.current;
@@ -54,7 +59,7 @@ export function useSessionOperations({
       const next = profileToSnapshot(profile);
       publishSnapshot(next);
       if (next.status === "authenticated") {
-        eventBus.publish("auth:session-refreshed:v1", {});
+        events.emit("auth:session-refreshed:v1", {});
       } else {
         expireSession();
         throw new Error("Session refresh completed without an authenticated profile");
@@ -63,7 +68,7 @@ export function useSessionOperations({
       expireSession();
       throw err;
     }
-  }), [expireSession, authService, publishSnapshot]);
+  }), [events, expireSession, authService, publishSnapshot]);
 
   const logout = useCallback(async () => {
     try {
@@ -73,11 +78,11 @@ export function useSessionOperations({
     } finally {
       publishSnapshot({ status: "anonymous" });
       onSessionCleared?.();
-      eventBus.publish("auth:logout:v1", {});
+      events.emit("auth:logout:v1", {});
       navigate(routes.login, { replace: true });
     }
-  }, [navigate, onSessionCleared, publishSnapshot, authService]);
-
+  }, [events, navigate, onSessionCleared, publishSnapshot, authService]);
+  
   return {
     loadSession,
     expireSession,

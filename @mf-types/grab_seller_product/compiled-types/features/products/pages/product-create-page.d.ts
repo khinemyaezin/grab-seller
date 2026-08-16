@@ -1,1 +1,2 @@
-export default function NewProductPage(): import("react").JSX.Element;
+export type ProductCreatePageProps = {};
+export default function NewProductPage({}: ProductCreatePageProps): import("react").JSX.Element;
