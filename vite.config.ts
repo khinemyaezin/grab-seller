@@ -66,14 +66,15 @@ export default defineConfig(({ mode }) => {
           },
         },
         shared: {
-          react: { singleton: true, requiredVersion: "19.2.4" },
+          "react": { singleton: true, requiredVersion: "19.2.4" },
           "react-dom": { singleton: true, requiredVersion: "19.2.4" },
           "react-router": { singleton: true, requiredVersion: "7.18.0" },
-          "@tanstack/react-query": { singleton: true, requiredVersion: "5.99.2" },
-          "@khinemyaezin/seller-api": { singleton: true },
-          "@khinemyaezin/seller-ui": { singleton: true },
-          "recharts": { singleton: true },
           "react-hook-form": { singleton: true, requiredVersion: "7.74.0" },
+          "recharts": { singleton: true },
+          "@tanstack/react-query": { singleton: true, requiredVersion: "5.99.2" },
+          "@khinemyaezin/seller-api": { singleton: true, version: "^1.0.1-canary-b5b1875" },
+          "@khinemyaezin/seller-ui": { singleton: true, version: "^1.0.1-canary-b5b1875" },
+          "@khinemyaezin/seller-contracts": { singleton: true, version: "^1.0.1-canary-b5b1875" },
         },
       }),
     ],
@@ -88,6 +89,8 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_API_URL,
           changeOrigin: true,
           xfwd: true,
+          timeout: 0,
+          proxyTimeout: 0,
           headers: {
             "X-Platform": "SELLER_PORTAL"
           }
