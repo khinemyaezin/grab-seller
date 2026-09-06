@@ -1,15 +1,18 @@
 import { useAuth } from "../../app/AuthContext";
 import { useEntryLink } from "../../app/EntryLinkContext";
 import { RemoteBoundary } from "../../components/RemoteBoundary";
+import { useSseStream } from "../../hooks";
 import { useProductExtensions } from "./use-product-extensions";
 
 const loadSellerProduct = () => import("grab_seller_product/Routes");
 
 export function CatalogRemote() {
-  const { platform } = useAuth();
+  const { platform, snapshot } = useAuth();
   const catalogLink = useEntryLink("catalog");
   const pricingLink = useEntryLink("pricing");
   const inventoryLink = useEntryLink("inventory");
+
+  useSseStream(platform, snapshot);
 
   const extensions = useProductExtensions({
     platform,

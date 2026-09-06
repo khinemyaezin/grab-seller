@@ -1,15 +1,14 @@
 import { useEffect, useMemo } from "react";
 import { createBackendEventStream, resolveLink } from "@khinemyaezin/seller-api";
 import type {
-  EventPayloads,
   SellerPlatform,
   SessionSnapshot,
 } from "@khinemyaezin/seller-contracts";
 import { useEntryGet } from "./use-entry";
-
-type WorkflowUpdatedV1 = EventPayloads["workflow:updated:v1"] & {
-  idempotencyKey?: string;
-};
+import {
+  WorkflowEventStreamHandler,
+} from "../services/workflow-sse-handler";
+import { SseHandler } from "src/types/sse";
 
 function fallbackEventStreamUrl(apiBaseUrl: string): string {
   return `${apiBaseUrl.replace(/\/$/, "")}/events/stream`;
@@ -22,38 +21,14 @@ function parseReadyProducerId(data: string): "backend" | "host" {
       return parsed.producerId;
     }
   } catch {
-    // Ignore malformed ready payloads and default to backend.
   }
   return "backend";
 }
 
-function parseWorkflowFrame(data: string): WorkflowUpdatedV1 | null {
-  try {
-    const parsed = JSON.parse(data) as Record<string, unknown>;
-    if (
-      typeof parsed.workflowId !== "string" ||
-      typeof parsed.workflowName !== "string" ||
-      typeof parsed.status !== "string"
-    ) {
-      return null;
-    }
-    return {
-      producerId: typeof parsed.producerId === "string" ? parsed.producerId : "backend",
-      workflowId: parsed.workflowId,
-      workflowName: parsed.workflowName,
-      status: parsed.status,
-      idempotencyKey:
-        typeof parsed.idempotencyKey === "string" ? parsed.idempotencyKey : undefined,
-      errorMessage: typeof parsed.errorMessage === "string" ? parsed.errorMessage : undefined,
-    };
-  } catch {
-    return null;
-  }
-}
-
-export function useBackendEventStream(
+export function useSseStream(
   platform: SellerPlatform,
   snapshot: SessionSnapshot,
+  handlers?: SseHandler[],
 ): void {
   const { data, isFetched } = useEntryGet({ href: platform.config.apiBaseUrl });
   const events = platform.events;
@@ -62,6 +37,11 @@ export function useBackendEventStream(
     snapshot.status === "authenticated"
       ? snapshot.user.currentAccessContext?.scopeId
       : undefined;
+
+  const moduleHandlers = useMemo(
+    () => handlers ?? [new WorkflowEventStreamHandler()],
+    [handlers],
+  );
 
   const streamUrl = useMemo(() => {
     const discovered = resolveLink(data?._links, "event-stream")?.href;
@@ -94,12 +74,11 @@ export function useBackendEventStream(
           });
           return;
         }
-        if (frame.event !== "workflow") {
-          return;
-        }
-        const payload = parseWorkflowFrame(frame.data);
-        if (payload) {
-          events.emit("workflow:updated:v1", payload);
+
+        for (const handler of moduleHandlers) {
+          if (handler.handle(frame, events)) {
+            return;
+          }
         }
       },
       onDisconnected: () => {
@@ -120,5 +99,5 @@ export function useBackendEventStream(
         reason,
       });
     };
-  }, [events, refresh, scopeId, snapshot.status, streamUrl]);
+  }, [events, handlers, refresh, scopeId, snapshot.status, streamUrl]);
 }

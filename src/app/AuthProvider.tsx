@@ -9,7 +9,7 @@ import {
 } from "@khinemyaezin/seller-contracts";
 
 import { AuthContextValue, AuthContext } from "./AuthContext";
-import { useAuthService, useBackendEventStream, useSessionEffects, useSessionOperations, useSessionState } from "../hooks";
+import { useAuthService, useSessionEffects, useSessionOperations, useSessionState } from "../hooks";
 
 export function AuthProvider({
   children,
@@ -66,7 +66,6 @@ export function AuthProvider({
     events,
   });
 
-  useBackendEventStream(platform, snapshot);
 
   const value = useMemo<AuthContextValue>(() => ({
     snapshot,
