@@ -1,3 +1,4 @@
+import { InventoryEditOp } from "@khinemyaezin/seller-contracts";
 import type { AdjustmentReason, CoverageGapKind, LocationType, ReceiveStockMovementType, ZoneType } from "./inventory.model";
 export type LocationFormValues = {
     code: string;
@@ -53,6 +54,7 @@ export type ItemFormValues = {
 };
 export type ItemsFilterForm = {
     sku?: string;
+    variantId?: string;
 };
 export type CoverageFilterForm = {
     locationId?: string;
@@ -100,4 +102,44 @@ export type UpdateReorderConfigFormValues = {
     reorderPoint: number;
     reorderQuantity: number;
     maxStock: number | null;
+};
+export type CreateInventoryItemValues = {
+    locationId: string;
+    initialQuantity: number;
+    safetyStock: number;
+    reorderPoint: number;
+    reorderQuantity: number;
+    maxStock: number | "";
+};
+export type InventoryItemEditRow = {
+    op: "CREATE";
+    locationId: string;
+    locationName: string;
+    inventoryItemId?: string;
+    onHandBefore: number;
+    onHand: number;
+    available: number;
+    createValues?: CreateInventoryItemValues;
+    adjustValues?: never;
+    operation?: Extract<InventoryEditOp, {
+        op: "CREATE";
+    }>;
+} | {
+    op: "ADJUST";
+    locationId: string;
+    locationName: string;
+    inventoryItemId: string;
+    onHandBefore: number;
+    onHand: number;
+    available: number;
+    adjustValues?: AdjustStockFormValues;
+    createValues?: never;
+    operation?: Extract<InventoryEditOp, {
+        op: "ADJUST";
+    }>;
+};
+export type InventoryItemEditForm = {
+    sku?: string;
+    variantId?: string;
+    items: InventoryItemEditRow[];
 };

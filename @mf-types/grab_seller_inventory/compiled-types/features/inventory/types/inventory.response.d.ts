@@ -68,6 +68,7 @@ export interface InventoryItemResponse {
     id: string;
     sku: string;
     merchantId: string;
+    productVariantId?: string;
     productName: string | null;
     locationId: string;
     locationCode: string;

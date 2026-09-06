@@ -7,4 +7,4 @@ export type InlinePricingWidgetHandle = {
     }>;
     getValues: () => PricingPayload;
 };
-export default function InlinePricingWidgetExposed({ groupId, slotId, context, platform, entryLink, }: InlinePricingWidgetExposedProps): import("react").JSX.Element | null;
+export default function InlinePricingWidgetExposed({ groupId, slotId, context: initialContext, platform, entryLink, }: InlinePricingWidgetExposedProps): import("react").JSX.Element | null;

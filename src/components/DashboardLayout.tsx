@@ -30,7 +30,7 @@ export function DashboardLayout() {
             <AdminSidebar />
             <main className="min-h-screen flex-1 bg-background dark:bg-black">
               <AdminSiteHeader />
-              <ContextBar />
+              <ContextBar saveTimeoutMs={130_000} />
               <Toaster />
               <Outlet />
             </main>

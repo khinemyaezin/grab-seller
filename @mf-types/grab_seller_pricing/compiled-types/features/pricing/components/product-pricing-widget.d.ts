@@ -1,6 +1,6 @@
 import { PricingCreateContext, PricingPayload } from "@khinemyaezin/seller-contracts";
 import { Ref } from "react";
-import { PricingWidgetHandle } from "./product-pricing-widget-exposed";
+import { PricingWidgetHandle } from "../hooks/use-pricing-new-slot";
 export type ProductPricingWidgetProps = {
     context?: PricingCreateContext;
     value?: PricingPayload;

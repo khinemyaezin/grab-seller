@@ -3,4 +3,4 @@ export type ProductEditFormProps = {
     productId: string;
     onLifecycleEvent?: (event: ProductLifecycleEvent) => void;
 };
-export default function ProductEditForm({ productId, onLifecycleEvent }: ProductEditFormProps): import("react").JSX.Element;
+export default function ProductEditForm(props: ProductEditFormProps): import("react").JSX.Element;

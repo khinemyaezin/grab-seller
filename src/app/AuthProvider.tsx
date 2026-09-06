@@ -66,6 +66,7 @@ export function AuthProvider({
     events,
   });
 
+
   const value = useMemo<AuthContextValue>(() => ({
     snapshot,
     user: snapshot.status === "authenticated" ? snapshot.user : null,
