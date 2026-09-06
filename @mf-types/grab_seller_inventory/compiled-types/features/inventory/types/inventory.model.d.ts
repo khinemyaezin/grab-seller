@@ -190,3 +190,23 @@ export interface CoverageRow {
     reorderPoint?: number;
     itemId?: string;
 }
+export interface InventoryItem {
+    id: string;
+    sku: string;
+    merchantId: string;
+    productVariantId?: string;
+    productName: string | null;
+    locationId: string;
+    locationCode: string;
+    locationName: string;
+    onHand: number;
+    reserved: number;
+    inTransit: number;
+    damaged: number;
+    available: number;
+    status: InventoryStatus | string;
+    safetyStock: number;
+    reorderPoint: number;
+    reorderQuantity: number;
+    maxStock: number | null;
+}

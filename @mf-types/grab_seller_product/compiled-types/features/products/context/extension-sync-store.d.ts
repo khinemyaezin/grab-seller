@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
-import { ProductContributions } from "../types/catalog.request";
+import { ProductContributions, UpdateProductContributions } from "../types/catalog.request";
 import { ExtensionSyncStore, SlotEntry } from "@khinemyaezin/seller-contracts";
 export declare function ExtensionSyncProvider({ children }: {
     children: ReactNode;
 }): import("react").JSX.Element;
-export declare function useExtensionSyncStore(): ExtensionSyncStore<ProductContributions>;
+export declare function useCreateExtensionSyncStore(): ExtensionSyncStore<ProductContributions>;
+export declare function useUpdateExtensionSyncStore(): ExtensionSyncStore<UpdateProductContributions>;
 export declare function useSlotPayload<TPayload>(groupId: string): TPayload | undefined;
 export declare function useHasSlotEntries(): boolean;
 export declare function useDomainSlotEntries<TPayload>(domain: string): SlotEntry<TPayload>[];

@@ -13,6 +13,7 @@ export type Variant = {
     name: string;
     matrixKey: string;
     sku: string;
+    id?: string;
     variations: Variation[];
 };
 export type Variation = {
@@ -53,6 +54,8 @@ export type ProductLifecycleEvent = {
 } | {
     type: "createFailed";
 } | {
+    type: "createTimedOut";
+} | {
     type: "validationFailed";
     name?: string;
     errors?: ExtensionFieldErrors;
@@ -60,6 +63,8 @@ export type ProductLifecycleEvent = {
     type: "updated";
 } | {
     type: "updateFailed";
+} | {
+    type: "updateTimedOut";
 } | {
     type: "archived";
     name?: string;

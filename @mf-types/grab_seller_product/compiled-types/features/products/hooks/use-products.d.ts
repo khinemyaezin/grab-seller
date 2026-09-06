@@ -1,6 +1,10 @@
+import { type QueryClient } from "@tanstack/react-query";
 import type { HateoasLink } from "@khinemyaezin/seller-api";
-import type { CreateProductRequest, CreateSellableProductRequest, CreateSellableProductResponse, GetFullProductResponse, UpdateProductRequest, UpdateProductResponse, ProductModerationResponse, DeleteProductResponse, ProductFilterFormValue } from "@/features/products/types";
+import type { CreateProductRequest, CreateSellableProductRequest, CreateSellableProductResponse, GetFullProductResponse, UpdateProductRequest, UpdateProductResponse, UpdateSellableProductRequest, ProductModerationResponse, DeleteProductResponse, ProductFilterFormValue } from "@/features/products/types";
 import { ProductSearchResponse } from "../types/catalog.response";
+export declare function invalidateProductsQueries(queryClient: QueryClient): Promise<void>;
+export declare function invalidateProductDetailQueries(queryClient: QueryClient, productId: string): Promise<void>;
+export declare function invalidateProductQueries(queryClient: QueryClient, productId?: string): Promise<void[]>;
 export declare function useProductMutation(): import("@tanstack/react-query").UseMutationResult<void, Error, {
     link: HateoasLink;
     request: CreateProductRequest;
@@ -8,6 +12,10 @@ export declare function useProductMutation(): import("@tanstack/react-query").Us
 export declare function useCreateSellableProductMutation(): import("@tanstack/react-query").UseMutationResult<CreateSellableProductResponse, Error, {
     link: HateoasLink;
     request: CreateSellableProductRequest;
+}, unknown>;
+export declare function useUpdateSellableProductMutation(): import("@tanstack/react-query").UseMutationResult<CreateSellableProductResponse, Error, {
+    link: HateoasLink;
+    request: UpdateSellableProductRequest;
 }, unknown>;
 export declare function useProductUpdateMutation(): import("@tanstack/react-query").UseMutationResult<UpdateProductResponse, Error, {
     link: HateoasLink;

@@ -1,6 +1,6 @@
 import { InventoryCreateContext, InventoryPayload } from "@khinemyaezin/seller-contracts";
 import { Ref } from "react";
-import type { InventoryWidgetHandle } from "./product-inventory-widget-exposed";
+import { InventoryWidgetHandle } from "../../hooks/use-inventory-new-slot";
 export type ProductInventoryWidgetProps = {
     context?: InventoryCreateContext;
     value?: InventoryPayload;

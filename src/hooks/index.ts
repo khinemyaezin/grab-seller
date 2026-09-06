@@ -6,3 +6,4 @@ export * from "./use-session-state";
 export * from "./use-merchant-onboarding-effect";
 export * from "./use-seller-account-service";
 export * from "./use-breadcrumbs";
+export * from "./use-backend-event-stream";

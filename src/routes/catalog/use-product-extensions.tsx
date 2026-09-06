@@ -9,7 +9,6 @@ const InlinePricingEditWidget = lazy(() => import("grab_seller_pricing/InlinePri
 const ProductInventoryWidget = lazy(() => import("grab_seller_inventory/ProductInventoryWidget"));
 const InlineInventoryWidget = lazy(() => import("grab_seller_inventory/InlineInventoryWidget"));
 const InventoryItemEditWidget = lazy(() => import("grab_seller_inventory/InventoryItemEditWidget"));
-const InlineInventoryItemEditWidget = lazy(() => import("grab_seller_inventory/InlineInventoryItemEditWidget"));
 
 export type UseProductExtensionsParams = {
   platform: SellerPlatform;

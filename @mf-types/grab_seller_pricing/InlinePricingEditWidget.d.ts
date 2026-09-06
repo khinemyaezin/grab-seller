@@ -1,2 +1,2 @@
-declare const InlinePricingEditWidget: import("react").ComponentType<any>;
-export default InlinePricingEditWidget;
+export * from './compiled-types/features/pricing/components/inline-pricing-edit-widget-exposed';
+export { default } from './compiled-types/features/pricing/components/inline-pricing-edit-widget-exposed';

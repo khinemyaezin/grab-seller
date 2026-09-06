@@ -1,4 +1,4 @@
-import type { CategoryLeavesResult, CreateProductRequest, CreateSellableProductRequest, CreateSellableProductResponse, GetFullProductResponse, GetVariationOptionResult, GetVariationTypeResult, UpdateProductRequest, UpdateProductResponse, VariationMatrixRequest, VariationMatrixResponse, DeleteProductResponse, ProductModerationResponse, ProductSearchRequest, ProductSearchResponse } from "@/features/products/types";
+import type { CategoryLeavesResult, CreateProductRequest, CreateSellableProductRequest, CreateSellableProductResponse, GetFullProductResponse, GetVariationOptionResult, GetVariationTypeResult, UpdateProductRequest, UpdateProductResponse, UpdateSellableProductRequest, VariationMatrixRequest, VariationMatrixResponse, DeleteProductResponse, ProductModerationResponse, ProductSearchRequest, ProductSearchResponse } from "@/features/products/types";
 import type { HateoasLink } from "@khinemyaezin/seller-api";
 export declare const catalogService: {
     createVariationMatrix: (link: HateoasLink, request: VariationMatrixRequest, headers?: Record<string, string>) => Promise<VariationMatrixResponse>;
@@ -13,4 +13,5 @@ export declare const catalogService: {
     restoreProduct: (link: HateoasLink, headers?: Record<string, string>) => Promise<ProductModerationResponse>;
     publishProduct: (link: HateoasLink, headers?: Record<string, string>) => Promise<ProductModerationResponse>;
     createSellableProduct: (link: HateoasLink, request: CreateSellableProductRequest, headers?: Record<string, string>) => Promise<CreateSellableProductResponse>;
+    updateSellableProduct: (link: HateoasLink, request: UpdateSellableProductRequest, headers?: Record<string, string>) => Promise<CreateSellableProductResponse>;
 };

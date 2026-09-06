@@ -63,6 +63,7 @@ export interface SearchInventoryRequest {
     sku?: string;
     locationId?: string;
     status?: string;
+    variantId?: string;
 }
 export interface CheckInventoryExistenceRequest {
     locationId: string;
