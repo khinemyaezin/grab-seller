@@ -42,6 +42,7 @@ export type CreateProductRequest = {
 export type CreateSellableProductRequest = CreateProductRequest & {
     pricingLines: CreateSellableProductPricingLine[];
     inventoryLines: CreateSellableProductInventoryLine[];
+    idempotencyKey?: string;
 };
 export type CreateSellableProductPricingLine = {
     sku: string;
