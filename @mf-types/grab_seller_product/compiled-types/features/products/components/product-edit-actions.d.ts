@@ -1,7 +1,7 @@
 import { HateoasLink } from "@khinemyaezin/seller-api";
 import { ProductLifecycleEvent } from "../types";
-export type ActionButtonGroupProps = {
+export type ProductActionsMenuProps = {
     links?: Record<string, HateoasLink>;
     onLifecycleEvent?: (event: ProductLifecycleEvent) => void;
 };
-export default function ActionButtonGroup({ links, onLifecycleEvent }: ActionButtonGroupProps): import("react").JSX.Element;
+export default function ProductActionsMenu({ links, onLifecycleEvent }: ProductActionsMenuProps): import("react").JSX.Element | null;

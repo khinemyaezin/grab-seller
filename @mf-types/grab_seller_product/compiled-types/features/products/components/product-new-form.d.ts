@@ -3,5 +3,6 @@ import { HateoasLink } from "@khinemyaezin/seller-api";
 export type ProductNewFormProps = {
     link: HateoasLink;
     onLifecycleEvent?: (event: ProductLifecycleEvent) => void;
+    onCreated?: (productId: string) => void;
 };
-export default function ProductNewForm({ link, onLifecycleEvent }: ProductNewFormProps): import("react").JSX.Element;
+export default function ProductNewForm(props: ProductNewFormProps): import("react").JSX.Element;

@@ -11,16 +11,19 @@ import {
 } from "./inventory";
 import { AccountRemote } from "./account";
 import { AuthRemote } from "./auth";
+import { RequireAuth } from "./RequireAuth";
 
 export function ShellRoutes() {
   return (
     <Routes>
-      <Route path={routes.home} element={<DashboardLayout />}>
-        <Route index element={<DashboardPage />} />
-        <Route path={`/${routes.products}/*`} element={<CatalogRemote />} />
-        <Route path={`/${routes.inventory}/*`} element={<InventoryDashboardRemote />} />
-        <Route path={`/${routes.locations}/*`} element={<InventoryLocationsRemote />} />
-        <Route path={`/${routes.stock}/*`} element={<InventoryStockRemote />} />
+      <Route element={<RequireAuth />}>
+        <Route path={routes.home} element={<DashboardLayout />}>
+          <Route index element={<DashboardPage />} />
+          <Route path={`/${routes.products}/*`} element={<CatalogRemote />} />
+          <Route path={`/${routes.inventory}/*`} element={<InventoryDashboardRemote />} />
+          <Route path={`/${routes.locations}/*`} element={<InventoryLocationsRemote />} />
+          <Route path={`/${routes.stock}/*`} element={<InventoryStockRemote />} />
+        </Route>
       </Route>
       <Route element={<SimpleLayout />}>
         <Route path="/onboarding/*" element={<AccountRemote />} />
