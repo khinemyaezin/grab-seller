@@ -1,2 +1,2 @@
-export * from './compiled-types/features/inventory/components/item/inventory-item-edit-exposed';
-export { default } from './compiled-types/features/inventory/components/item/inventory-item-edit-exposed';
+export * from './compiled-types/features/inventory/widgets/inventory-edit-widget';
+export { default } from './compiled-types/features/inventory/widgets/inventory-edit-widget';

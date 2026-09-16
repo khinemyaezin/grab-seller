@@ -1,4 +1,4 @@
-import type { ExtensionFieldErrors } from "@khinemyaezin/seller-contracts";
+import type { SlotValidationErrors } from "@khinemyaezin/seller-contracts";
 export type Product = {
     name: string;
     category: Category | null;
@@ -15,6 +15,7 @@ export type Variant = {
     sku: string;
     id?: string;
     variations: Variation[];
+    manageInventory?: boolean;
 };
 export type Variation = {
     typeId: string;
@@ -52,15 +53,19 @@ export type ProductLifecycleEvent = {
 } | {
     type: "created";
 } | {
+    type: "createMediaFailed";
+} | {
     type: "createFailed";
 } | {
     type: "createTimedOut";
 } | {
     type: "validationFailed";
     name?: string;
-    errors?: ExtensionFieldErrors;
+    errors?: SlotValidationErrors;
 } | {
     type: "updated";
+} | {
+    type: "updateMediaFailed";
 } | {
     type: "updateFailed";
 } | {
@@ -80,6 +85,12 @@ export type ProductLifecycleEvent = {
     name?: string;
 } | {
     type: "publishFailed";
+    name?: string;
+} | {
+    type: "deleted";
+    name?: string;
+} | {
+    type: "deleteFailed";
     name?: string;
 };
 export type ProductStatus = "DRAFT" | "ACTIVE" | "ARCHIVED" | "SUSPENDED";

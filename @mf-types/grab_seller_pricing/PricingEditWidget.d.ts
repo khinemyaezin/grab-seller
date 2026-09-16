@@ -1,2 +1,2 @@
-export * from './compiled-types/features/pricing/components/pricing-edit-widget-exposed';
-export { default } from './compiled-types/features/pricing/components/pricing-edit-widget-exposed';
+export * from './compiled-types/features/pricing/widgets/pricing-edit-widget';
+export { default } from './compiled-types/features/pricing/widgets/pricing-edit-widget';

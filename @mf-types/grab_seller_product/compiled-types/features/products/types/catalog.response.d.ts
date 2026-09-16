@@ -4,13 +4,18 @@ export interface CatalogRoot {
     self?: HateoasLink;
     searchProducts?: HateoasLink;
     createProduct?: HateoasLink;
+    createProductMediaUpload?: HateoasLink;
+    createStagedMediaUpload?: HateoasLink;
+    replaceProductMedia?: HateoasLink;
     getProduct?: HateoasLink;
+    getVariant?: HateoasLink;
     searchCategoryLeaves?: HateoasLink;
     searchVariantTypes?: HateoasLink;
     searchVariantOptions?: HateoasLink;
     generateVariationMatrix?: HateoasLink;
     createSellableProduct?: HateoasLink;
     updateSellableProduct?: HateoasLink;
+    updateProductVariant?: HateoasLink;
 }
 export type VariationMatrixResponseVariation = {
     optionId: string;
@@ -50,6 +55,55 @@ export interface ProductSearchResponse {
     _links?: Record<string, HateoasLink>;
     page: HateoasPageMetadata;
 }
+export interface GetVariantResponse {
+    productId: string;
+    productName: string;
+    variantId: string;
+    sku: string;
+    status: string;
+    matrixKey: string;
+    variations: {
+        optionId: string;
+        optionName: string;
+        typeId: string;
+        typeName: string;
+    }[];
+    manageInventory: boolean;
+    _links?: Record<string, HateoasLink>;
+}
+export type ProductMedia = {
+    id: string;
+    storageKey: string;
+    url: string;
+    contentType: string;
+    rank: number;
+};
+export type ProductMediaUploadResponse = {
+    url: string;
+    method: string;
+    requiredHeaders?: Record<string, string>;
+    storageKey: string;
+    expiresAt?: string;
+    _links?: Record<string, HateoasLink>;
+};
+export type ReplaceProductMediaRequest = {
+    medias: {
+        id?: string;
+        storageKey: string;
+        contentType?: string;
+        rank?: number;
+    }[];
+};
+export type ReplaceProductMediaResponse = {
+    productId: string;
+    medias: ProductMedia[];
+    _links?: Record<string, HateoasLink>;
+};
+export type CreateProductMediaUploadRequest = {
+    filename: string;
+    contentType: string;
+    sizeBytes: number;
+};
 export interface GetFullProductResponse {
     id: string;
     name: string;
@@ -66,13 +120,14 @@ export interface GetFullProductResponse {
     slug: string;
     featured: boolean;
     descriptions: null;
-    medias: null;
+    medias: ProductMedia[] | null;
     moderationNote: null;
     variants: {
         id: string;
         sku: string;
         status: string;
         matrixKey: string;
+        manageInventory?: boolean;
         variations: {
             optionId: string;
             optionName: string;
@@ -124,6 +179,10 @@ export interface WorkflowsRoot {
     self?: HateoasLink;
     createSellableProduct?: HateoasLink;
     getCreateSellableProduct?: HateoasLink;
+    updateSellableProduct?: HateoasLink;
+    getUpdateSellableProduct?: HateoasLink;
+    updateProductVariant?: HateoasLink;
+    getUpdateProductVariant?: HateoasLink;
 }
 export type CreateSellableProductResponse = {
     workflowId: string;
@@ -140,3 +199,22 @@ export type CreateSellableProductResponse = {
     _links?: Record<string, HateoasLink>;
 };
 export type UpdateSellableProductResponse = CreateSellableProductResponse;
+export type UpdateProductVariantResponse = {
+    workflowId: string;
+    status: string;
+    currentStep?: string | null;
+    productId?: string | null;
+    variantId?: string | null;
+    sku?: string | null;
+    variantUpdated?: boolean;
+    pricePair?: {
+        variantId: string;
+        sku: string;
+        priceSetId: string;
+    } | null;
+    inventoryItemIds?: string[];
+    compensatedPriceSetCount?: number;
+    partiallyApplied?: boolean;
+    errorMessage?: string | null;
+    _links?: Record<string, HateoasLink>;
+};
