@@ -1,4 +1,4 @@
-import { ChevronsUpDown, LayoutGrid, Store } from "lucide-react";
+import { ChevronsUpDown, LayoutGrid, ShoppingBag, Store } from "lucide-react";
 import React, { Suspense, lazy } from "react";
 import {
   Sidebar,
@@ -32,7 +32,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
         }
       ]
     },
-     {
+    {
       title: "Inventory",
       url: `/${routes.inventory}`,
       icon: LayoutGrid as any,
@@ -47,6 +47,12 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
         }
       ]
     },
+    {
+      title: "Storefronts",
+      url: `/${routes.storefronts}`,
+      icon: ShoppingBag as any,
+      items: []
+    },
   ];
 
   return (
@@ -56,7 +62,7 @@ export function AdminSidebar({ ...props }: React.ComponentProps<typeof Sidebar>)
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
-            <span className="truncate font-medium">Seller Central</span>
+              <span className="truncate font-medium">Seller Central</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

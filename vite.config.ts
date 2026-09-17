@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
       federation({
         name: "seller_shell",
-        dts: {
+        dts: process.env.MF_DTS === "0" ? false : {
           consumeTypes: {
             remoteTypeUrls: {
               grab_seller_auth: {
